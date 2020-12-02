@@ -10,20 +10,27 @@ public class ActionController : MonoBehaviour
     public float rollVelocity = 1f;
     public float rollthreshold = 4;//判断是否能翻滚的阈值
     public GameObject model;
+    [Space(10)] 
+    [Header("======  PhysicMaterial Setting ======")]
+    public PhysicMaterial phy_Mat_zero;
+    public PhysicMaterial phy_Mat_one;
     Animator mAnimator;
     PlayerInput mPlayerInput;
     Rigidbody rigidbody;
+    CapsuleCollider capsuleCollider;
     Vector3 planeMoveVec;
     Vector3 thrustVelocity=Vector3.zero;//跳跃向前的速度
     float targetSpeed;
     bool lockPlaneVec = false;
     bool isGround = false;
     bool canAttackFlag = false;
+
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         mPlayerInput = GetComponent<PlayerInput>();
         mAnimator = GetComponentInChildren<Animator>();
+        capsuleCollider = GetComponentInChildren<CapsuleCollider>();
     }
 
     void Start()
@@ -109,6 +116,12 @@ public class ActionController : MonoBehaviour
         mPlayerInput.enableInput = true;
         lockPlaneVec = false;
         canAttackFlag = true;
+        capsuleCollider.material = phy_Mat_one;
+    }
+
+    public void OnGroundExit()
+    {
+        capsuleCollider.material = phy_Mat_zero;
     }
 
     public void OnRollEnter()
