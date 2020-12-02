@@ -585,6 +585,8 @@ MonoBehaviour:
   rollVelocity: 3
   rollthreshold: 4
   model: {fileID: 1965000425}
+  phy_Mat_zero: {fileID: 13400000, guid: f79fe9e5539fce94a982a7ff63a93e2e, type: 2}
+  phy_Mat_one: {fileID: 13400000, guid: b71fc3dc6474c3a4d8b91014271730ff, type: 2}
 --- !u!33 &1365793819
 MeshFilter:
   m_ObjectHideFlags: 0

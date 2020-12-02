@@ -21,6 +21,7 @@ public class ActionController : MonoBehaviour
     Vector3 planeMoveVec;
     Vector3 thrustVelocity=Vector3.zero;//跳跃向前的速度
     float targetSpeed;
+    float lerpTarget;
     bool lockPlaneVec = false;
     bool isGround = false;
     bool canAttackFlag = false;
@@ -76,7 +77,7 @@ public class ActionController : MonoBehaviour
 
     bool CheckState(string name,string layername = "Base Layer")
     {
-        int layerIndex = mAnimator.GetLayerIndex(layername);
+        int layerIndex = mAnimator.GetLayerIndex(layername); 
         return mAnimator.GetCurrentAnimatorStateInfo(layerIndex).IsName(name);
     }
 
@@ -143,22 +144,35 @@ public class ActionController : MonoBehaviour
 
     public void OnAttack1hA_Enter()
     {
-        mAnimator.SetLayerWeight(mAnimator.GetLayerIndex("attack"), 1f);
+      
         mPlayerInput.enableInput = false;
-       // lockPlaneVec = true;
+        lerpTarget = 1;
     }
 
-    public void OnAttack1hA_IdleEnter()
+    public void OnAttack_IdleEnter()
     {
-        mAnimator.SetLayerWeight(mAnimator.GetLayerIndex("attack"), 0);
+      
         mPlayerInput.enableInput = true;
-      //  lockPlaneVec = false;
+        lerpTarget = 0;
     }
-
+    public void OnAttack_IdleUpdate()
+    {
+        thrustVelocity = model.transform.forward * mAnimator.GetFloat("attack1hAVelocity");
+        //插值权重
+        int layerIndex = mAnimator.GetLayerIndex("attack");
+        float currWeight = mAnimator.GetLayerWeight(layerIndex);
+        float currLerp = Mathf.Lerp(currWeight, lerpTarget,0.05f);
+        mAnimator.SetLayerWeight(layerIndex, currLerp);
+    }
     public void OnAttack1hA_Update()
     {
 
         thrustVelocity = model.transform.forward * mAnimator.GetFloat("attack1hAVelocity");
+        //插值权重
+        int layerIndex = mAnimator.GetLayerIndex("attack");
+        float currWeight = mAnimator.GetLayerWeight(layerIndex);
+        float currLerp = Mathf.Lerp(currWeight, lerpTarget, 0.2f);
+        mAnimator.SetLayerWeight(layerIndex, currLerp);
     }
     
 }
