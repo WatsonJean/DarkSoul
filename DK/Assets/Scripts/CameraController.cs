@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    PlayerInput pi;
+    IUserInput pi;
     ActionController actionController;
     public float HorizontalSpeed = 100;
     public float VerticalSpeed = 100;
@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
         playerHandle = transform.parent.parent.gameObject;
        cameraHandle = transform.parent.gameObject;
         cameraGo = Camera.main.gameObject;
-        pi = playerHandle.GetComponent<PlayerInput>();
+        pi = playerHandle.GetComponent<IUserInput>();
         actionController = playerHandle.GetComponent<ActionController>();
     }
 
@@ -38,8 +38,8 @@ public class CameraController : MonoBehaviour
         cameraHandle.transform.localEulerAngles = new Vector3(tempEulerAngles_X, 0, 0);
         //跟随
         cameraGo.transform.position = Vector3.SmoothDamp(cameraGo.transform.position, transform.position, ref velocity, smoothDampTime);
-         // cameraGo.transform.position = Vector3.Slerp(cameraGo.transform.position, transform.position, smoothDampTime*Time.deltaTime);
-        cameraGo.transform.eulerAngles = transform.eulerAngles;
+        // cameraGo.transform.position = Vector3.Slerp(cameraGo.transform.position, transform.position, smoothDampTime*Time.deltaTime);
+        cameraGo.transform.LookAt(cameraHandle.transform);
 
     }
 

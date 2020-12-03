@@ -16,10 +16,11 @@ public class ActionController : MonoBehaviour
     public PhysicMaterial phy_Mat_one;
     Animator mAnimator;
     PlayerInput mPlayerInput;
-    Rigidbody rigidbody;
+    Rigidbody rigbody;
     CapsuleCollider capsuleCollider;
     Vector3 planeMoveVec;
     Vector3 thrustVelocity=Vector3.zero;//跳跃向前的速度
+    Vector3 deltaPos_Rm; //rootmotion中动画的偏移量
     float targetSpeed;
     float lerpTarget;
     bool lockPlaneVec = false;
@@ -28,7 +29,7 @@ public class ActionController : MonoBehaviour
 
     void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigbody = GetComponent<Rigidbody>();
         mPlayerInput = GetComponent<PlayerInput>();
         mAnimator = GetComponentInChildren<Animator>();
         capsuleCollider = GetComponentInChildren<CapsuleCollider>();
@@ -40,7 +41,7 @@ public class ActionController : MonoBehaviour
 
     void Update()
     {
-        targetSpeed = mPlayerInput.Runing ()? runSpeed : walkSpeed;
+        targetSpeed = mPlayerInput.run ? runSpeed : walkSpeed;
         if (mPlayerInput.Dmag > 0.1)
                model.transform.forward =Vector3.Slerp(model.transform.forward, mPlayerInput.CurrVec, 0.3f) ;
 
@@ -50,16 +51,16 @@ public class ActionController : MonoBehaviour
             float target = mPlayerInput.Dmag * targetSpeed;
             float val = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), target,0.1f);
             mAnimator.SetFloat("forwordSpeed", val);
-            if (mPlayerInput.Jump())
+            if (mPlayerInput.jump)
             {
                 canAttackFlag = false;
                 mAnimator.SetTrigger("jump");         
             }
-            if (mPlayerInput.Attack() && CanAttack())
+            if (mPlayerInput.attack && CanAttack())
             {
                 mAnimator.SetTrigger("attack");
             }
-            if (rigidbody.velocity.magnitude > rollthreshold)
+            if (rigbody.velocity.magnitude > rollthreshold)
                 mAnimator.SetTrigger("roll");
         }
 
@@ -70,8 +71,10 @@ public class ActionController : MonoBehaviour
 
     void FixedUpdate()
     {
-        rigidbody.velocity = new Vector3(planeMoveVec.x, rigidbody.velocity.y, planeMoveVec.z) + thrustVelocity;
+        rigbody.position += deltaPos_Rm;
+        rigbody.velocity = new Vector3(planeMoveVec.x, rigbody.velocity.y, planeMoveVec.z) + thrustVelocity;
         thrustVelocity = Vector3.zero;
+        deltaPos_Rm = Vector3.zero;
 
     }
 
@@ -157,22 +160,37 @@ public class ActionController : MonoBehaviour
     }
     public void OnAttack_IdleUpdate()
     {
-        thrustVelocity = model.transform.forward * mAnimator.GetFloat("attack1hAVelocity");
-        //插值权重
         int layerIndex = mAnimator.GetLayerIndex("attack");
-        float currWeight = mAnimator.GetLayerWeight(layerIndex);
-        float currLerp = Mathf.Lerp(currWeight, lerpTarget,0.05f);
-        mAnimator.SetLayerWeight(layerIndex, currLerp);
+        LerpWeight(layerIndex, lerpTarget,0.05f);
     }
     public void OnAttack1hA_Update()
     {
 
         thrustVelocity = model.transform.forward * mAnimator.GetFloat("attack1hAVelocity");
-        //插值权重
+   
         int layerIndex = mAnimator.GetLayerIndex("attack");
+        LerpWeight(layerIndex, lerpTarget, 0.2f);
+    }
+
+    public void OnUpdateRootMotion(object obj)//rootmotion的移动量更新
+    {
+        //动画移动量累加，model最后播放动画完毕后更新给rig
+        if (CheckState("attack1h_C","attack"))
+        {    //相机跟随角色时，第三下攻击的rootmotion位置浮动过大，需要缓和
+
+            deltaPos_Rm = (Vector3)obj * 0.4f;
+        }
+           
+
+
+    }
+    //插值权重
+    void LerpWeight(int layerIndex,float target,float t)
+    {
         float currWeight = mAnimator.GetLayerWeight(layerIndex);
-        float currLerp = Mathf.Lerp(currWeight, lerpTarget, 0.2f);
+        float currLerp = Mathf.Lerp(currWeight, target, t);
         mAnimator.SetLayerWeight(layerIndex, currLerp);
     }
-    
+
+
 }
