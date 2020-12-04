@@ -55,7 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\RootMotionController.cs" />
      <Compile Include="Assets\Scripts\ActionController.cs" />
      <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMClearSignals.cs" />
      <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMOnEnterAndExit.cs" />
@@ -63,7 +62,9 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\GroundSensor.cs" />
      <Compile Include="Assets\Scripts\IUserInput.cs" />
+     <Compile Include="Assets\Scripts\LetfArmFixIK.cs" />
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
+     <Compile Include="Assets\Scripts\RootMotionController.cs" />
      <Compile Include="Assets\Scripts\TriggerController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>D:/IDE/unity2019.4.9/2019.4.9f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

@@ -19,10 +19,11 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         playerHandle = transform.parent.parent.gameObject;
-       cameraHandle = transform.parent.gameObject;
+        cameraHandle = transform.parent.gameObject;
         cameraGo = Camera.main.gameObject;
         pi = playerHandle.GetComponent<IUserInput>();
         actionController = playerHandle.GetComponent<ActionController>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()

@@ -60,6 +60,8 @@ public class ActionController : MonoBehaviour
             {
                 mAnimator.SetTrigger("attack");
             }
+
+            mAnimator.SetBool("defence", mPlayerInput.denfence);
             if (rigbody.velocity.magnitude > rollthreshold)
                 mAnimator.SetTrigger("roll");
         }

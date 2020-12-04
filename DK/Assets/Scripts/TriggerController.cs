@@ -12,7 +12,7 @@ public class TriggerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void ResetTrigger(string paraName)
+   public  void ResetTrigger(string paraName)
     {
         animator.ResetTrigger(paraName);
     }
