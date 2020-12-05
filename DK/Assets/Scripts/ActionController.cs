@@ -62,8 +62,9 @@ public class ActionController : MonoBehaviour
             }
 
             mAnimator.SetBool("defence", mPlayerInput.denfence);
-            if (rigbody.velocity.magnitude > rollthreshold)
+            if (mPlayerInput.roll || rigbody.velocity.magnitude > rollthreshold)
                 mAnimator.SetTrigger("roll");
+                canAttackFlag = false;
         }
 
         if (!lockPlaneVec)

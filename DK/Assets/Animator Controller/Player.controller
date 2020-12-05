@@ -9,11 +9,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: jump
+    m_ConditionEvent: roll
     m_EventTreshold: 0
-  - m_ConditionMode: 4
-    m_ConditionEvent: forwordSpeed
-    m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7187002361239399453}
   m_Solo: 0
@@ -157,11 +154,11 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: jump
+    m_ConditionEvent: roll
     m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: forwordSpeed
-    m_EventTreshold: 0.3
+    m_EventTreshold: 0.1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3047203425548123539}
   m_Solo: 0
