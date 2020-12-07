@@ -22,7 +22,7 @@ public class ActionController : MonoBehaviour
     Vector3 planeMoveVec;
     Vector3 thrustVelocity=Vector3.zero;//跳跃向前的速度
     Vector3 deltaPos_Rm; //rootmotion中动画的偏移量
-    float targetSpeed;
+
     float lerpTarget;
     bool lockPlaneVec = false;
     bool isGround = false;
@@ -43,7 +43,8 @@ public class ActionController : MonoBehaviour
 
     void Update()
     {
-        targetSpeed = mPlayerInput.run ? runSpeed : walkSpeed;
+
+        float moveSpeed = mPlayerInput.run ? runSpeed : walkSpeed;
         if (mPlayerInput.lockTarget)
         {
             cameraController.LockUnLock();
@@ -53,22 +54,37 @@ public class ActionController : MonoBehaviour
             if (mPlayerInput.Dmag > 0.1)
                 model.transform.forward = Vector3.Slerp(model.transform.forward, mPlayerInput.CurrVec, 0.3f);
             if (!lockPlaneVec)
-                planeMoveVec = model.transform.forward * mPlayerInput.Dmag * targetSpeed;
+                planeMoveVec = model.transform.forward * mPlayerInput.Dmag * moveSpeed;
         }
         else
         {
             model.transform.forward =transform.forward;
             if (!lockPlaneVec)
-                planeMoveVec = mPlayerInput.CurrVec * targetSpeed;
+                planeMoveVec = mPlayerInput.CurrVec * moveSpeed;
         }
 
 
         //动画
         if (mAnimator)
         {
-            float target = mPlayerInput.Dmag * targetSpeed;
-            float val = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), target,0.1f);
-            mAnimator.SetFloat("forwordSpeed", val);
+            float animSpeed = mPlayerInput.run ? 2 : 1;
+
+
+            if (!cameraController.lockState)//未锁定目标
+            {
+                float val = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), mPlayerInput.Dmag * animSpeed, 0.1f);
+                mAnimator.SetFloat("forwordSpeed", val);
+                mAnimator.SetFloat("rightSpeed", 0);
+            }
+            else
+            {
+                Vector3 localVec = transform.InverseTransformVector(mPlayerInput.CurrVec);
+                float z = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), localVec.z * animSpeed, 0.1f);
+                mAnimator.SetFloat("forwordSpeed", z);
+                float x = Mathf.Lerp(mAnimator.GetFloat("rightSpeed"), localVec.x * animSpeed, 0.1f);
+                mAnimator.SetFloat("rightSpeed", x);
+            }
+
             if (mPlayerInput.jump)
             {
                 canAttackFlag = false;

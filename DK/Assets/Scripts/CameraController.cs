@@ -77,7 +77,8 @@ public class CameraController : MonoBehaviour
             if (cols.Length ==0 )
             {
                 LockTarget = null;
-            }
+               model.transform.forward = playerHandle.transform.forward;
+        }
             else
             {
                 foreach (var item in cols)
@@ -88,7 +89,7 @@ public class CameraController : MonoBehaviour
                         break;
                     }
                     LockTarget = item.gameObject;
-                    //model.transform.forward = playerHandle.transform.forward;
+                    model.transform.forward = playerHandle.transform.forward;
                     break;
                 }
             }

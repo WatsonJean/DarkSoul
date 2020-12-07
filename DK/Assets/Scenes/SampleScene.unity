@@ -1466,11 +1466,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7ffad61dccb7444a942fc338c61ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 3.5
+  runSpeed: 4
   walkSpeed: 1.5
   JumpVelocity: 4.3
   rollVelocity: 3
-  rollthreshold: 4
+  rollthreshold: 5
   model: {fileID: 1965000425}
   cameraController: {fileID: 946166142}
   phy_Mat_zero: {fileID: 13400000, guid: f79fe9e5539fce94a982a7ff63a93e2e, type: 2}
