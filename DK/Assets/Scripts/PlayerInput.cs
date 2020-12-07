@@ -10,6 +10,7 @@ public class PlayerInput : IUserInput
     ActionButton acBtn_jump = new ActionButton();
     ActionButton acBtn_denfence = new ActionButton();
     ActionButton acBtn_roll = new ActionButton();
+    ActionButton acLockTarget = new ActionButton();
     void Update()
     {
 
@@ -33,13 +34,13 @@ public class PlayerInput : IUserInput
         roll = RollInput();
         attack = AttackInput();
         denfence = DenfenceInput();
+        lockTarget = LockTargetnput();
     }
 
     protected virtual void Input_XY()
     {
         inputX = Input.GetAxis("Horizontal");
         inputY = Input.GetAxis("Vertical");
-
     }
     protected virtual void Input_ViewXY()
     {
@@ -82,5 +83,13 @@ public class PlayerInput : IUserInput
             return false;
         acBtn_attack.Tick(Input.GetKey(key_attack));
         return acBtn_attack.isDown;
+    }
+
+    protected virtual bool LockTargetnput()
+    {
+        if (!enableLockTarget)
+            return false;
+        acLockTarget.Tick(Input.GetKey(key_lockTarget));
+        return acLockTarget.isDown;
     }
 }

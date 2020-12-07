@@ -10,7 +10,10 @@ public  abstract class IUserInput : MonoBehaviour
     public string key_jump;
     public string key_roll;
     public string key_denfence  ;
+    public string key_lockTarget;
+
     [Header("=============输入开关=============")]
+    public bool enableLockTarget = true;
     public bool enableAttack = true;
     public bool enableRun = true;
     public bool enableJump = true;
@@ -32,6 +35,7 @@ public  abstract class IUserInput : MonoBehaviour
     public bool attack = false;
     public bool roll = false;
     public bool denfence = false;
+    public bool lockTarget = false;
     bool lastJump = false;
     bool lastAttack = false;
 

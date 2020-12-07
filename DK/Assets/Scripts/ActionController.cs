@@ -10,6 +10,7 @@ public class ActionController : MonoBehaviour
     public float rollVelocity = 1f;
     public float rollthreshold = 4;//判断是否能翻滚的阈值
     public GameObject model;
+    public CameraController cameraController;
     [Space(10)] 
     [Header("======  PhysicMaterial Setting ======")]
     public PhysicMaterial phy_Mat_zero;
@@ -25,7 +26,8 @@ public class ActionController : MonoBehaviour
     float lerpTarget;
     bool lockPlaneVec = false;
     bool isGround = false;
-    bool canAttackFlag = false;
+    bool canAttackFlag = true;
+
 
     void Awake()
     {
@@ -42,10 +44,26 @@ public class ActionController : MonoBehaviour
     void Update()
     {
         targetSpeed = mPlayerInput.run ? runSpeed : walkSpeed;
-        if (mPlayerInput.Dmag > 0.1)
-               model.transform.forward =Vector3.Slerp(model.transform.forward, mPlayerInput.CurrVec, 0.3f) ;
+        if (mPlayerInput.lockTarget)
+        {
+            cameraController.LockUnLock();
+        }
+        if ( ! cameraController.lockState)
+        {
+            if (mPlayerInput.Dmag > 0.1)
+                model.transform.forward = Vector3.Slerp(model.transform.forward, mPlayerInput.CurrVec, 0.3f);
+            if (!lockPlaneVec)
+                planeMoveVec = model.transform.forward * mPlayerInput.Dmag * targetSpeed;
+        }
+        else
+        {
+            model.transform.forward =transform.forward;
+            if (!lockPlaneVec)
+                planeMoveVec = mPlayerInput.CurrVec * targetSpeed;
+        }
 
 
+        //动画
         if (mAnimator)
         {
             float target = mPlayerInput.Dmag * targetSpeed;
@@ -63,17 +81,16 @@ public class ActionController : MonoBehaviour
 
             mAnimator.SetBool("defence", mPlayerInput.denfence);
             if (mPlayerInput.roll || rigbody.velocity.magnitude > rollthreshold)
+            {
                 mAnimator.SetTrigger("roll");
                 canAttackFlag = false;
+            }
         }
-
-        if (!lockPlaneVec)
-            planeMoveVec = model.transform.forward * mPlayerInput.Dmag * targetSpeed;
-
     }
 
     void FixedUpdate()
     {
+      //  rigbody.velocity = new Vector3(2, rigbody.velocity.y, 0) ;
         rigbody.position += deltaPos_Rm;
         rigbody.velocity = new Vector3(planeMoveVec.x, rigbody.velocity.y, planeMoveVec.z) + thrustVelocity;
         thrustVelocity = Vector3.zero;
