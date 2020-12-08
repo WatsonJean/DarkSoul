@@ -73,7 +73,7 @@ public class PlayerInput : IUserInput
     {
         if (!enableJump)
             return false;
-        //acBtn_run.Tick(Input.GetKey(key_jump));
+        //acBtn_run.Tick(Input.GetKey(key_jump)); 
         return acBtn_run.isDown && acBtn_run.isExtending;//双击跳跃
     }
 

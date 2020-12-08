@@ -5,6 +5,18 @@ using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
+    public class LockTargetObj
+    {
+        public GameObject obj;
+        public float halfHeight;
+
+        public LockTargetObj(GameObject obj, float halfHeight)
+        {
+            this.obj = obj;
+            this.halfHeight = halfHeight;
+        }
+    }
+
     IUserInput pi;
     ActionController actionController;
     public float HorizontalSpeed = 100;
@@ -14,8 +26,9 @@ public class CameraController : MonoBehaviour
     public float smoothDampTime = 1;
     public Image img_lockDot;
     public bool lockState = false;
+    public float lockTargetMaxDis = 10f;
     [SerializeField]
-    private GameObject LockTarget;
+    private LockTargetObj LockTarget;
     GameObject playerHandle;
     GameObject cameraHandle;
     GameObject cameraGo;
@@ -50,10 +63,14 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            Vector3 targetVec = LockTarget.transform.position - model.transform.position;
+            Vector3 targetVec = LockTarget.obj.transform.position - model.transform.position;
             targetVec.y = 0;//保持同一平面
             playerHandle.transform.forward = Vector3.Slerp(playerHandle.transform.forward, targetVec.normalized,0.3f);
-
+            cameraHandle.transform.LookAt(LockTarget.obj.transform);
+            if (Vector3.Distance(model.transform.position, LockTarget.obj.transform.position) > lockTargetMaxDis)
+            {
+                LockTarget = null;
+            }
         }
         //跟随
         cameraGo.transform.position = Vector3.SmoothDamp(cameraGo.transform.position, transform.position, ref velocity, smoothDampTime);
@@ -61,9 +78,18 @@ public class CameraController : MonoBehaviour
         cameraGo.transform.LookAt(cameraHandle.transform);
 
     }
-
+    void ShowLockDot()
+    {
+        lockState = img_lockDot.enabled = (LockTarget != null);
+        if (LockTarget != null)
+        {
+            Vector3 viewPos = Camera.main.WorldToScreenPoint(LockTarget.obj.transform.position + new Vector3(0, LockTarget.halfHeight, 0));
+            img_lockDot.rectTransform.position = viewPos;
+        }
+    }
     void LateUpdate()
     {
+        ShowLockDot();
 
 
     }
@@ -78,26 +104,23 @@ public class CameraController : MonoBehaviour
             {
                 LockTarget = null;
                model.transform.forward = playerHandle.transform.forward;
-        }
+            }
             else
             {
                 foreach (var item in cols)
                 {
-                    if (LockTarget == item.gameObject)//如果去锁定当前同一个被锁定的目标则取消锁定
+                    if (LockTarget !=null && LockTarget.obj == item.gameObject)//如果去锁定当前同一个被锁定的目标则取消锁定
                     {
                         LockTarget = null;
                         break;
                     }
-                    LockTarget = item.gameObject;
+                   
+                    LockTarget =new LockTargetObj( item.gameObject, item.bounds.extents.y);
                     model.transform.forward = playerHandle.transform.forward;
                     break;
                 }
             }
-          ShowLockDot();
     }
 
-    void ShowLockDot()
-    {
-        lockState = img_lockDot.enabled = LockTarget != null;
-    }
+
 }

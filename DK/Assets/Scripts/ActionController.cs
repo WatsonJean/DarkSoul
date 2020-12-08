@@ -25,6 +25,7 @@ public class ActionController : MonoBehaviour
 
     float lerpTarget;
     bool lockPlaneVec = false;
+    bool lockDirection = false;
     bool isGround = false;
     bool canAttackFlag = true;
 
@@ -49,20 +50,27 @@ public class ActionController : MonoBehaviour
         {
             cameraController.LockUnLock();
         }
-        if ( ! cameraController.lockState)
+        if ( ! cameraController.lockState)//未锁定目标
         {
             if (mPlayerInput.Dmag > 0.1)
                 model.transform.forward = Vector3.Slerp(model.transform.forward, mPlayerInput.CurrVec, 0.3f);
-            if (!lockPlaneVec)
-                planeMoveVec = model.transform.forward * mPlayerInput.Dmag * moveSpeed;
+            if ( ! lockPlaneVec)
+                planeMoveVec = model.transform.forward* mPlayerInput .Dmag* moveSpeed;
         }
-        else
+        else //锁定目标状态
         {
-            model.transform.forward =transform.forward;
+            if (lockDirection) //进行跳跃翻滚等动画时要改变方向
+            {
+                model.transform.forward = planeMoveVec.normalized;
+               
+            }
+            else
+            {
+                model.transform.forward = transform.forward;
+            }
             if (!lockPlaneVec)
                 planeMoveVec = mPlayerInput.CurrVec * moveSpeed;
         }
-
 
         //动画
         if (mAnimator)
@@ -78,7 +86,7 @@ public class ActionController : MonoBehaviour
             }
             else
             {
-                Vector3 localVec = transform.InverseTransformVector(mPlayerInput.CurrVec);
+                Vector3 localVec =  transform.InverseTransformVector(mPlayerInput.CurrVec);
                 float z = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), localVec.z * animSpeed, 0.1f);
                 mAnimator.SetFloat("forwordSpeed", z);
                 float x = Mathf.Lerp(mAnimator.GetFloat("rightSpeed"), localVec.x * animSpeed, 0.1f);
@@ -101,12 +109,17 @@ public class ActionController : MonoBehaviour
                 mAnimator.SetTrigger("roll");
                 canAttackFlag = false;
             }
+
+            if (mPlayerInput.roll && mPlayerInput.Dmag < 0.1)
+            {
+                mAnimator.SetTrigger("jab");
+                canAttackFlag = false;
+            }
         }
     }
 
     void FixedUpdate()
     {
-      //  rigbody.velocity = new Vector3(2, rigbody.velocity.y, 0) ;
         rigbody.position += deltaPos_Rm;
         rigbody.velocity = new Vector3(planeMoveVec.x, rigbody.velocity.y, planeMoveVec.z) + thrustVelocity;
         thrustVelocity = Vector3.zero;
@@ -120,9 +133,14 @@ public class ActionController : MonoBehaviour
         return mAnimator.GetCurrentAnimatorStateInfo(layerIndex).IsName(name);
     }
 
+    bool CheckStateByTag(string name, string layername = "Base Layer")
+    {
+        int layerIndex = mAnimator.GetLayerIndex(layername);
+        return mAnimator.GetCurrentAnimatorStateInfo(layerIndex).IsTag(name);
+    }
     bool CanAttack()
     {
-        return CheckState("Ground") && canAttackFlag;
+        return (CheckState("Ground") ||  CheckStateByTag("attack"))&& canAttackFlag;
     }
 
     void OnJumpEnter()
@@ -130,6 +148,7 @@ public class ActionController : MonoBehaviour
         thrustVelocity = new Vector3(0, JumpVelocity, 0);
         mPlayerInput.enableInput = false;
          lockPlaneVec = true;
+        lockDirection = true;
     }
 
 
@@ -150,11 +169,13 @@ public class ActionController : MonoBehaviour
     {
         mPlayerInput.enableInput = false;
         lockPlaneVec = true;
+
     }
     public void OnGroundEnter()
     {
         mPlayerInput.enableInput = true;
         lockPlaneVec = false;
+        lockDirection = false;
         canAttackFlag = true;
         capsuleCollider.material = phy_Mat_one;
     }
@@ -169,6 +190,7 @@ public class ActionController : MonoBehaviour
         thrustVelocity =  new Vector3(0, rollVelocity, 0);
         mPlayerInput.enableInput = false;
         lockPlaneVec = true;
+        lockDirection = true;
     } 
      public void OnJabEnter()
     {
@@ -182,36 +204,26 @@ public class ActionController : MonoBehaviour
     }
 
     public void OnAttack1hA_Enter()
-    {
-      
+    {  
         mPlayerInput.enableInput = false;
-        lerpTarget = 1;
     }
 
-    public void OnAttack_IdleEnter()
-    {
-      
-        mPlayerInput.enableInput = true;
-        lerpTarget = 0;
-    }
-    public void OnAttack_IdleUpdate()
-    {
-        int layerIndex = mAnimator.GetLayerIndex("attack");
-        LerpWeight(layerIndex, lerpTarget,0.05f);
-    }
+    //public void OnAttack_IdleEnter()
+    //{
+
+    //    mPlayerInput.enableInput = true;
+    //    lerpTarget = 0;
+    //}
+
     public void OnAttack1hA_Update()
     {
-
         thrustVelocity = model.transform.forward * mAnimator.GetFloat("attack1hAVelocity");
-   
-        int layerIndex = mAnimator.GetLayerIndex("attack");
-        LerpWeight(layerIndex, lerpTarget, 0.2f);
     }
 
     public void OnUpdateRootMotion(object obj)//rootmotion的移动量更新
     {
         //动画移动量累加，model最后播放动画完毕后更新给rig
-        if (CheckState("attack1h_C","attack"))
+        if (CheckState("attack1h_C"))
         {    //相机跟随角色时，第三下攻击的rootmotion位置浮动过大，需要缓和
 
             deltaPos_Rm = (Vector3)obj * 0.4f;
