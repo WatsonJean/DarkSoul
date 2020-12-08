@@ -12,8 +12,8 @@ public class ActionButton
     public bool isDelaying;//单次点击按下后计时中状态
     bool currState;
     bool lastState;
-    AcButtonTimer _ExtendingTimer = new AcButtonTimer();
-    AcButtonTimer _DelayingTimer = new AcButtonTimer();
+    AcButtonTimer _ExtendingTimer = new AcButtonTimer();//松开后的延长计时
+    AcButtonTimer _DelayingTimer = new AcButtonTimer();//按下后开始计时
 
     public void Tick(bool inputState)
     {

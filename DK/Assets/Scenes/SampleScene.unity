@@ -1366,12 +1366,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748c19e2bc9537249a37021c59e73756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key_attack: mouse 0
   key_run: left shift
   key_jump: space
   key_roll: 
-  key_denfence: mouse 1
+  key_denfence: e
   key_lockTarget: q
+  key_LT: t
+  key_RT: y
+  key_LB: mouse 0
+  key_RB: mouse 1
   enableLockTarget: 1
   enableAttack: 1
   enableRun: 1
@@ -1388,10 +1391,13 @@ MonoBehaviour:
   CurrVec: {x: 0, y: 0, z: 0}
   Dmag: 0
   run: 1
-  jump: 0
-  attack: 0
-  roll: 0
   denfence: 0
+  jump: 0
+  roll: 0
+  LT: 0
+  RT: 0
+  LB: 0
+  RB: 0
   lockTarget: 0
 --- !u!136 &1365793817
 CapsuleCollider:
@@ -1428,6 +1434,7 @@ MonoBehaviour:
   cameraController: {fileID: 946166142}
   phy_Mat_zero: {fileID: 13400000, guid: f79fe9e5539fce94a982a7ff63a93e2e, type: 2}
   phy_Mat_one: {fileID: 13400000, guid: b71fc3dc6474c3a4d8b91014271730ff, type: 2}
+  leftIsShield: 0
 --- !u!33 &1365793819
 MeshFilter:
   m_ObjectHideFlags: 0

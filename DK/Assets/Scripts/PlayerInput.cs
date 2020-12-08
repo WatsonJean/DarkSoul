@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerInput : IUserInput
 {
 
-    ActionButton acBtn_attack = new ActionButton();
+ //   ActionButton acBtn_attack = new ActionButton();
     ActionButton acBtn_run = new ActionButton();
-    ActionButton acBtn_jump = new ActionButton();
     ActionButton acBtn_denfence = new ActionButton();
-    ActionButton acBtn_roll = new ActionButton();
     ActionButton acLockTarget = new ActionButton();
+    ActionButton acBtn_LT = new ActionButton();
+    ActionButton acBtn_RT = new ActionButton();
+    ActionButton acBtn_LB = new ActionButton();
+    ActionButton acBtn_RB = new ActionButton();
     void Update()
     {
 
@@ -32,11 +34,35 @@ public class PlayerInput : IUserInput
         run = RunInput();
         jump = JumpInput();
         roll = RollInput();
-        attack = AttackInput();
-        denfence = DenfenceInput();
+       // attack = AttackInput();
+        denfence = DenfenceInput()? !denfence : denfence;
         lockTarget = LockTargetnput();
+        LT = LTInput();
+        LB = LBInput();
+        RT = RTInput();
+        RB = RBInput();
     }
 
+    protected virtual bool LTInput()
+    {
+        acBtn_LT.Tick(Input.GetKey(key_LT));
+        return acBtn_LT.isDown;
+    }
+    protected virtual bool LBInput()
+    {
+        acBtn_LB.Tick(Input.GetKey(key_LB));
+        return acBtn_LB.isDown;
+    }
+    protected virtual bool RTInput()
+    {
+        acBtn_RT.Tick(Input.GetKey(key_RT));
+        return acBtn_RT.isDown;
+    }
+    protected virtual bool RBInput()
+    {
+        acBtn_RB.Tick(Input.GetKey(key_RB));
+        return acBtn_RB.isDown;
+    }
     protected virtual void Input_XY()
     {
         inputX = Input.GetAxis("Horizontal");
@@ -58,7 +84,7 @@ public class PlayerInput : IUserInput
     protected virtual bool DenfenceInput()
     {
         acBtn_denfence.Tick(Input.GetKey(key_denfence));
-        return acBtn_denfence.isPressing;
+        return acBtn_denfence.isDown;
     }
     protected virtual bool RunInput()
     {
@@ -77,13 +103,13 @@ public class PlayerInput : IUserInput
         return acBtn_run.isDown && acBtn_run.isExtending;//双击跳跃
     }
 
-    protected virtual bool AttackInput()
-    {
-        if (!enableAttack)
-            return false;
-        acBtn_attack.Tick(Input.GetKey(key_attack));
-        return acBtn_attack.isDown;
-    }
+    //protected virtual bool AttackInput()
+    //{
+    //    if (!enableAttack)
+    //        return false;
+    //    acBtn_attack.Tick(Input.GetKey(key_attack));
+    //    return acBtn_attack.isDown;
+    //}
 
     protected virtual bool LockTargetnput()
     {

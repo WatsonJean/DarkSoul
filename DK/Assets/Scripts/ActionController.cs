@@ -29,7 +29,7 @@ public class ActionController : MonoBehaviour
     bool isGround = false;
     bool canAttackFlag = true;
 
-
+    public bool leftIsShield = true;
     void Awake()
     {
         rigbody = GetComponent<Rigidbody>();
@@ -92,24 +92,57 @@ public class ActionController : MonoBehaviour
                 float x = Mathf.Lerp(mAnimator.GetFloat("rightSpeed"), localVec.x * animSpeed, 0.1f);
                 mAnimator.SetFloat("rightSpeed", x);
             }
-
+            //跳
             if (mPlayerInput.jump)
             {
                 canAttackFlag = false;
                 mAnimator.SetTrigger("jump");         
             }
-            if (mPlayerInput.attack && CanAttack())
+            //攻击
+            if ((mPlayerInput.LB || mPlayerInput.RB) && CanAttack())
             {
-                mAnimator.SetTrigger("attack");
-            }
+                if (mPlayerInput.LB && !leftIsShield)//左手攻击 没有拿盾的情况下才能攻击
+                {
+                    mAnimator.SetBool("R0L1", true);
+                    mAnimator.SetTrigger("attack");
+                }
+                else if (mPlayerInput.RB)//右手攻击
+                {
+                    mAnimator.SetBool("R0L1", false);
+                    mAnimator.SetTrigger("attack");
+                }
 
-            mAnimator.SetBool("defence", mPlayerInput.denfence);
+            }
+            //举盾防御
+            if (leftIsShield) //如果左手有盾
+            {
+                if (CanDefence())
+                {
+                    mAnimator.SetBool("defence", mPlayerInput.denfence);
+
+                    int layerIndex = mAnimator.GetLayerIndex("denfense");
+                    LerpWeight(layerIndex, 1, 1f);
+                }
+                else
+                {
+                    mAnimator.SetBool("defence", false);
+                 //   int layerIndex = mAnimator.GetLayerIndex("denfense");
+                   // LerpWeight(layerIndex, 0, 1f);
+                }
+
+            }
+            else
+            {
+                int layerIndex = mAnimator.GetLayerIndex("denfense");
+                LerpWeight(layerIndex, 0, 1f);
+            }
+           //翻滚
             if (mPlayerInput.roll || rigbody.velocity.magnitude > rollthreshold)
             {
                 mAnimator.SetTrigger("roll");
                 canAttackFlag = false;
             }
-
+            //后跳
             if (mPlayerInput.roll && mPlayerInput.Dmag < 0.1)
             {
                 mAnimator.SetTrigger("jab");
@@ -141,6 +174,11 @@ public class ActionController : MonoBehaviour
     bool CanAttack()
     {
         return (CheckState("Ground") ||  CheckStateByTag("attack"))&& canAttackFlag;
+    }
+
+    bool CanDefence()
+    {
+        return CheckState("Ground")  ;
     }
 
     void OnJumpEnter()
@@ -229,8 +267,6 @@ public class ActionController : MonoBehaviour
             deltaPos_Rm = (Vector3)obj * 0.4f;
         }
            
-
-
     }
     //插值权重
     void LerpWeight(int layerIndex,float target,float t)
