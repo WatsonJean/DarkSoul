@@ -16,7 +16,7 @@ public class ActionController : MonoBehaviour
     public PhysicMaterial phy_Mat_zero;
     public PhysicMaterial phy_Mat_one;
     Animator mAnimator;
-    PlayerInput mPlayerInput;
+    IUserInput mInput;
     Rigidbody rigbody;
     CapsuleCollider capsuleCollider;
     Vector3 planeMoveVec;
@@ -30,10 +30,11 @@ public class ActionController : MonoBehaviour
     bool canAttackFlag = true;
 
     public bool leftIsShield = true;
+    public bool isAI = false;
     void Awake()
     {
         rigbody = GetComponent<Rigidbody>();
-        mPlayerInput = GetComponent<PlayerInput>();
+        mInput = GetComponent<IUserInput>();
         mAnimator = GetComponentInChildren<Animator>();
         capsuleCollider = GetComponentInChildren<CapsuleCollider>();
     }
@@ -45,17 +46,17 @@ public class ActionController : MonoBehaviour
     void Update()
     {
 
-        float moveSpeed = mPlayerInput.run ? runSpeed : walkSpeed;
-        if (mPlayerInput.lockTarget)
+        float moveSpeed = mInput.run ? runSpeed : walkSpeed;
+        if (mInput.lockTarget)
         {
             cameraController.LockUnLock();
         }
         if ( ! cameraController.lockState)//未锁定目标
         {
-            if (mPlayerInput.Dmag > 0.1)
-                model.transform.forward = Vector3.Slerp(model.transform.forward, mPlayerInput.CurrVec, 0.3f);
+            if (mInput.Dmag > 0.1)
+                model.transform.forward = Vector3.Slerp(model.transform.forward, mInput.CurrVec, 0.3f);
             if ( ! lockPlaneVec)
-                planeMoveVec = model.transform.forward* mPlayerInput .Dmag* moveSpeed;
+                planeMoveVec = model.transform.forward* mInput .Dmag* moveSpeed;
         }
         else //锁定目标状态
         {
@@ -69,44 +70,44 @@ public class ActionController : MonoBehaviour
                 model.transform.forward = transform.forward;
             }
             if (!lockPlaneVec)
-                planeMoveVec = mPlayerInput.CurrVec * moveSpeed;
+                planeMoveVec = mInput.CurrVec * moveSpeed;
         }
 
         //动画
         if (mAnimator)
         {
-            float animSpeed = mPlayerInput.run ? 2 : 1;
+            float animSpeed = mInput.run ? 2 : 1;
 
 
             if (!cameraController.lockState)//未锁定目标
             {
-                float val = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), mPlayerInput.Dmag * animSpeed, 0.1f);
+                float val = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), mInput.Dmag * animSpeed, 0.1f);
                 mAnimator.SetFloat("forwordSpeed", val);
                 mAnimator.SetFloat("rightSpeed", 0);
             }
             else
             {
-                Vector3 localVec =  transform.InverseTransformVector(mPlayerInput.CurrVec);
+                Vector3 localVec =  transform.InverseTransformVector(mInput.CurrVec);
                 float z = Mathf.Lerp(mAnimator.GetFloat("forwordSpeed"), localVec.z * animSpeed, 0.1f);
                 mAnimator.SetFloat("forwordSpeed", z);
                 float x = Mathf.Lerp(mAnimator.GetFloat("rightSpeed"), localVec.x * animSpeed, 0.1f);
                 mAnimator.SetFloat("rightSpeed", x);
             }
             //跳
-            if (mPlayerInput.jump)
+            if (mInput.jump)
             {
                 canAttackFlag = false;
                 mAnimator.SetTrigger("jump");         
             }
             //攻击
-            if ((mPlayerInput.LB || mPlayerInput.RB) && CanAttack())
+            if ((mInput.LB || mInput.RB) && CanAttack())
             {
-                if (mPlayerInput.LB && !leftIsShield)//左手攻击 没有拿盾的情况下才能攻击
+                if (mInput.LB && !leftIsShield)//左手攻击 没有拿盾的情况下才能攻击
                 {
                     mAnimator.SetBool("R0L1", true);
                     mAnimator.SetTrigger("attack");
                 }
-                else if (mPlayerInput.RB)//右手攻击
+                else if (mInput.RB)//右手攻击
                 {
                     mAnimator.SetBool("R0L1", false);
                     mAnimator.SetTrigger("attack");
@@ -118,7 +119,7 @@ public class ActionController : MonoBehaviour
             {
                 if (CanDefence())
                 {
-                    mAnimator.SetBool("defence", mPlayerInput.denfence);
+                    mAnimator.SetBool("defence", mInput.denfence);
 
                     int layerIndex = mAnimator.GetLayerIndex("denfense");
                     LerpWeight(layerIndex, 1, 1f);
@@ -137,13 +138,13 @@ public class ActionController : MonoBehaviour
                 LerpWeight(layerIndex, 0, 1f);
             }
            //翻滚
-            if (mPlayerInput.roll || rigbody.velocity.magnitude > rollthreshold)
+            if (mInput.roll || rigbody.velocity.magnitude > rollthreshold)
             {
                 mAnimator.SetTrigger("roll");
                 canAttackFlag = false;
             }
             //后跳
-            if (mPlayerInput.roll && mPlayerInput.Dmag < 0.1)
+            if (mInput.roll && mInput.Dmag < 0.1)
             {
                 mAnimator.SetTrigger("jab");
                 canAttackFlag = false;
@@ -184,7 +185,7 @@ public class ActionController : MonoBehaviour
     void OnJumpEnter()
     { 
         thrustVelocity = new Vector3(0, JumpVelocity, 0);
-        mPlayerInput.enableInput = false;
+        mInput.enableInput = false;
          lockPlaneVec = true;
         lockDirection = true;
     }
@@ -205,13 +206,13 @@ public class ActionController : MonoBehaviour
 
     public void OnFallEnter()
     {
-        mPlayerInput.enableInput = false;
+        mInput.enableInput = false;
         lockPlaneVec = true;
 
     }
     public void OnGroundEnter()
     {
-        mPlayerInput.enableInput = true;
+        mInput.enableInput = true;
         lockPlaneVec = false;
         lockDirection = false;
         canAttackFlag = true;
@@ -226,13 +227,13 @@ public class ActionController : MonoBehaviour
     public void OnRollEnter()
     {
         thrustVelocity =  new Vector3(0, rollVelocity, 0);
-        mPlayerInput.enableInput = false;
+        mInput.enableInput = false;
         lockPlaneVec = true;
         lockDirection = true;
     } 
      public void OnJabEnter()
     {
-        mPlayerInput.enableInput = false;
+        mInput.enableInput = false;
         lockPlaneVec = true;
     }
     public void OnJabUpdate()
@@ -241,9 +242,14 @@ public class ActionController : MonoBehaviour
         thrustVelocity = model.transform.forward * mAnimator.GetFloat("jabVelocity");
     }
 
+    public void OnHitEnter()
+    {
+        mInput.enableInput = false;
+        planeMoveVec = Vector3.zero;
+    }
     public void OnAttack1hA_Enter()
     {  
-        mPlayerInput.enableInput = false;
+        mInput.enableInput = false;
     }
 
     //public void OnAttack_IdleEnter()
@@ -276,5 +282,8 @@ public class ActionController : MonoBehaviour
         mAnimator.SetLayerWeight(layerIndex, currLerp);
     }
 
-
+    public void SetTriggerbyName(string name)
+    {
+        mAnimator.SetTrigger(name);
+    }
 }

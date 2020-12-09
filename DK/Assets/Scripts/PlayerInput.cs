@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerInput : IUserInput
 {
-
- //   ActionButton acBtn_attack = new ActionButton();
     ActionButton acBtn_run = new ActionButton();
     ActionButton acBtn_denfence = new ActionButton();
     ActionButton acLockTarget = new ActionButton();
@@ -27,14 +25,11 @@ public class PlayerInput : IUserInput
             inputY = 0;
         }
 
-        Vector2 temp = SquareToCircle(new Vector2(inputX, inputY));
-        Dmag = Mathf.Sqrt(temp.x * temp.x + temp.y * temp.y);
-        CurrVec = transform.right * temp.x + transform.forward * temp.y;
+        UpdateVecDmag(inputX, inputY);
 
         run = RunInput();
         jump = JumpInput();
         roll = RollInput();
-       // attack = AttackInput();
         denfence = DenfenceInput()? !denfence : denfence;
         lockTarget = LockTargetnput();
         LT = LTInput();
@@ -91,7 +86,6 @@ public class PlayerInput : IUserInput
         if (!enableRun)
             return false;
         acBtn_run.Tick(Input.GetKey(key_run));
-
         return (acBtn_run.isPressing && !acBtn_run.isDelaying) || acBtn_run.isExtending;
     }
 
@@ -102,14 +96,6 @@ public class PlayerInput : IUserInput
         //acBtn_run.Tick(Input.GetKey(key_jump)); 
         return acBtn_run.isDown && acBtn_run.isExtending;//双击跳跃
     }
-
-    //protected virtual bool AttackInput()
-    //{
-    //    if (!enableAttack)
-    //        return false;
-    //    acBtn_attack.Tick(Input.GetKey(key_attack));
-    //    return acBtn_attack.isDown;
-    //}
 
     protected virtual bool LockTargetnput()
     {

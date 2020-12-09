@@ -36,7 +36,7 @@ public  abstract class IUserInput : MonoBehaviour
     [Header("=============其他=============")]
 
     //-------pressing signal
-    public bool run = true;
+    public bool run = false;
     public bool denfence = false;
     //-------trigger signal
     public bool jump = false;
@@ -58,5 +58,11 @@ public  abstract class IUserInput : MonoBehaviour
         return output;
     }
    
+    public void UpdateVecDmag(float right,float up)
+    {
+        Vector2 temp = SquareToCircle(new Vector2(right, up));
+        Dmag = Mathf.Sqrt(temp.x * temp.x + temp.y * temp.y);
+        CurrVec = transform.right * temp.x + transform.forward * temp.y;
+    }
 
 }

@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     public Image img_lockDot;
     public bool lockState = false;
     public float lockTargetMaxDis = 10f;
+    public string lockLayerMaskName = "enemy";
     [SerializeField]
     private LockTargetObj LockTarget;
     GameObject playerHandle;
@@ -35,16 +36,21 @@ public class CameraController : MonoBehaviour
     GameObject model;
     float tempEulerAngles_X = 0;
     Vector3 velocity;
-    void Awake()
+    void Start()
     {
         playerHandle = transform.parent.parent.gameObject;
         cameraHandle = transform.parent.gameObject;
-        cameraGo = Camera.main.gameObject;
         pi = playerHandle.GetComponent<IUserInput>();
         actionController = playerHandle.GetComponent<ActionController>();
         model = actionController.model;
-        Cursor.lockState = CursorLockMode.Locked;
-        img_lockDot.enabled = false;
+
+
+        if (!actionController.isAI)
+        {
+            cameraGo = Camera.main.gameObject;
+            Cursor.lockState = CursorLockMode.Locked;
+            img_lockDot.enabled = false;
+        }
     }
 
     void FixedUpdate()
@@ -72,33 +78,37 @@ public class CameraController : MonoBehaviour
                 LockTarget = null;
             }
         }
-        //跟随
-        cameraGo.transform.position = Vector3.SmoothDamp(cameraGo.transform.position, transform.position, ref velocity, smoothDampTime);
-        //cameraGo.transform.position = Vector3.Slerp(cameraGo.transform.position, transform.position, smoothDampTime);
-        cameraGo.transform.LookAt(cameraHandle.transform);
-
+        if ( !actionController.isAI)
+        {
+            //跟随
+            cameraGo.transform.position = Vector3.SmoothDamp(cameraGo.transform.position, transform.position, ref velocity, smoothDampTime);
+            //cameraGo.transform.position = Vector3.Slerp(cameraGo.transform.position, transform.position, smoothDampTime);
+            cameraGo.transform.LookAt(cameraHandle.transform);
+        }
     }
     void ShowLockDot()
     {
-        lockState = img_lockDot.enabled = (LockTarget != null);
-        if (LockTarget != null)
+        lockState = LockTarget != null;
+        if (!actionController.isAI)
         {
-            Vector3 viewPos = Camera.main.WorldToScreenPoint(LockTarget.obj.transform.position + new Vector3(0, LockTarget.halfHeight, 0));
-            img_lockDot.rectTransform.position = viewPos;
+            img_lockDot.enabled = lockState;
+            if (LockTarget != null)
+            {
+                Vector3 viewPos = Camera.main.WorldToScreenPoint(LockTarget.obj.transform.position + new Vector3(0, LockTarget.halfHeight, 0));
+                img_lockDot.rectTransform.position = viewPos;
+            }
         }
     }
     void LateUpdate()
     {
         ShowLockDot();
-
-
     }
 
    public void LockUnLock()
     {
             Vector3 origin =model.transform.position + new Vector3(0,1,0);
             Vector3 boxCenter = origin + model.transform.forward * 5.0f;
-            int layer = LayerMask.GetMask("enemy");
+            int layer = LayerMask.GetMask(lockLayerMaskName);
             Collider[] cols = Physics.OverlapBox(boxCenter, new Vector3(1, 1, 5), model.transform.rotation, layer);
             if (cols.Length ==0 )
             {
