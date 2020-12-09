@@ -282,7 +282,7 @@ public class ActionController : MonoBehaviour
         mAnimator.SetLayerWeight(layerIndex, currLerp);
     }
 
-    public void SetTriggerbyName(string name)
+    public void IssueTrigger(string name)
     {
         mAnimator.SetTrigger(name);
     }
