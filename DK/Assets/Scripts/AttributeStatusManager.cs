@@ -38,5 +38,5 @@ public class AttributeStatusManager : IActorManagerInterface
         isBlocked = actorManager.ac.CheckState("blocked"); ;
         isHit = actorManager.ac.CheckState("hit"); ;
         isDie = actorManager.ac.CheckState("die"); ;
-}
+    }
 }

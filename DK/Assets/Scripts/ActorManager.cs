@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ActorManager : MonoBehaviour
 {
@@ -34,19 +32,30 @@ public class ActorManager : MonoBehaviour
     {
         
     }
-    public void DoDamage()
+    public void Damage()
     {
-        if (attributeMgr.HP>0)
+        if (attributeMgr.isDenfense)
         {
-            if (attributeMgr.AddHP(-1) > 0)
-            {
-                Hit();
-            }
-            else
-                Die();
+            Blocked();
         }
-    }
+        else
+        {
+            if (attributeMgr.HP > 0)
+            {
+                if (attributeMgr.AddHP(-1) > 0)
+                {
+                    Hit();
+                }
+                else
+                    Die();
+            }
+        }
 
+    }
+    public void Blocked()
+    {
+        ac.IssueTrigger("blocked");
+    }
     public void Hit()
     {
         ac.IssueTrigger("hit");

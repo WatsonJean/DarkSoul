@@ -21,7 +21,7 @@ public class BattleManager : IActorManagerInterface
     {
         if (other.tag =="weapon")
         {
-            actorManager.DoDamage();
+            actorManager.Damage();
             Debug.Log("被接触的物体为" + other.name);
         }
      
