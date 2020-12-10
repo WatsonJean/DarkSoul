@@ -62,14 +62,17 @@
      <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMClearSignals.cs" />
      <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMOnEnterAndExit.cs" />
      <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMOnUpdate.cs" />
+     <Compile Include="Assets\Scripts\AttributeStatusManager.cs" />
      <Compile Include="Assets\Scripts\BattleManager.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\DummyInput.cs" />
      <Compile Include="Assets\Scripts\GroundSensor.cs" />
+     <Compile Include="Assets\Scripts\IActorManagerInterface.cs" />
      <Compile Include="Assets\Scripts\IUserInput.cs" />
      <Compile Include="Assets\Scripts\LetfArmFixIK.cs" />
      <Compile Include="Assets\Scripts\PlayerInput.cs" />
      <Compile Include="Assets\Scripts\RootMotionController.cs" />
+     <Compile Include="Assets\Scripts\TransformHelper.cs" />
      <Compile Include="Assets\Scripts\TriggerController.cs" />
      <Compile Include="Assets\Scripts\WeaponManager.cs" />
  <Reference Include="UnityEngine">

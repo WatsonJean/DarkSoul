@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : IActorManagerInterface
 {
-    public ActorManager am;
-    public Collider weaponCollider;
-    public GameObject weapon_L;
-    public GameObject weapon_R;
-    void WeaponEnable(int val)
+    Transform weaponHandle_L;
+    Transform weaponHandle_R;
+    Collider weaponCollider_L;
+    Collider weaponCollider_R;
+    void Awake()
     {
-        weaponCollider.enabled =  val>0;
+        weaponHandle_L = transform.DeepFind("weaponHandle_L");
+        weaponHandle_R = transform.DeepFind("weaponHandle_R");
+        weaponCollider_L = weaponHandle_L.GetComponentInChildren<Collider>();
+        weaponCollider_R = weaponHandle_R.GetComponentInChildren<Collider>();
+        weaponCollider_L.enabled = false;
+        weaponCollider_R.enabled = false;
+    }
+    public void WeaponEnable(int val)
+    {
+        weaponCollider_L.enabled = actorManager.ac.CheckStateByTag("attack_L") && val > 0;
+        weaponCollider_R.enabled = actorManager.ac.CheckStateByTag("attack_R") &&  val >0;
     }
 
 }

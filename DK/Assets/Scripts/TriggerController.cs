@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//动画事件挂载有此类
 public class TriggerController : MonoBehaviour
 {
     Animator animator;

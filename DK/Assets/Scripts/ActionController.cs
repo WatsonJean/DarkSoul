@@ -16,7 +16,7 @@ public class ActionController : MonoBehaviour
     public PhysicMaterial phy_Mat_zero;
     public PhysicMaterial phy_Mat_one;
     Animator mAnimator;
-    IUserInput mInput;
+    public IUserInput mInput;
     Rigidbody rigbody;
     CapsuleCollider capsuleCollider;
     Vector3 planeMoveVec;
@@ -161,20 +161,20 @@ public class ActionController : MonoBehaviour
 
     }
 
-    bool CheckState(string name,string layername = "Base Layer")
+   public bool CheckState(string name,string layername = "Base Layer")
     {
         int layerIndex = mAnimator.GetLayerIndex(layername); 
         return mAnimator.GetCurrentAnimatorStateInfo(layerIndex).IsName(name);
     }
 
-    bool CheckStateByTag(string name, string layername = "Base Layer")
+    public bool CheckStateByTag(string name, string layername = "Base Layer")
     {
         int layerIndex = mAnimator.GetLayerIndex(layername);
         return mAnimator.GetCurrentAnimatorStateInfo(layerIndex).IsTag(name);
     }
     bool CanAttack()
     {
-        return (CheckState("Ground") ||  CheckStateByTag("attack"))&& canAttackFlag;
+        return (CheckState("Ground") ||  CheckStateByTag("attack_L") || CheckStateByTag("attack_R")) && canAttackFlag;
     }
 
     bool CanDefence()
@@ -252,13 +252,6 @@ public class ActionController : MonoBehaviour
         mInput.enableInput = false;
     }
 
-    //public void OnAttack_IdleEnter()
-    //{
-
-    //    mPlayerInput.enableInput = true;
-    //    lerpTarget = 0;
-    //}
-
     public void OnAttack1hA_Update()
     {
         thrustVelocity = model.transform.forward * mAnimator.GetFloat("attack1hAVelocity");
@@ -271,8 +264,14 @@ public class ActionController : MonoBehaviour
         {    //相机跟随角色时，第三下攻击的rootmotion位置浮动过大，需要缓和
 
             deltaPos_Rm = (Vector3)obj * 0.4f;
-        }
-           
+        }         
+    }
+
+    public void OnAttack_Exit()
+    {
+
+        object ob = 0;
+        model.SendMessage("WeaponEnable", ob);
     }
     //插值权重
     void LerpWeight(int layerIndex,float target,float t)

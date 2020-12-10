@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
-public class BattleManager : MonoBehaviour
+public class BattleManager : IActorManagerInterface
 {
-    public ActorManager am;
+
     CapsuleCollider capsuleCol;
     void Start()
     {
@@ -21,7 +21,7 @@ public class BattleManager : MonoBehaviour
     {
         if (other.tag =="weapon")
         {
-            am.DoDamage();
+            actorManager.DoDamage();
             Debug.Log("被接触的物体为" + other.name);
         }
      

@@ -504,7 +504,7 @@ ModelImporter:
           postInfinity: 2
           rotationOrder: 4
       events:
-      - time: 0.40509275
+      - time: 0.40980974
         functionName: WeaponEnable
         data: 
         objectReferenceParameter: {instanceID: 0}
