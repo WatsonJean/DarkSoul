@@ -9,13 +9,14 @@ public class LetfArmFixIK : MonoBehaviour
     public Vector3 offset;
     void Awake()
     {
-        animator = GetComponent<Animator>();
-        actionController = GetComponentInParent<ActionController>();
+      //  animator = GetComponent<Animator>();
+      //  actionController = GetComponentInParent<ActionController>();
     }
 
     // Update is called once per frame
     void OnAnimatorIK()
     {
+        return;//换动画后不再需要调整
         if ( ! actionController.leftIsShield)
             return;
         Transform transform= animator.GetBoneTransform(HumanBodyBones.LeftLowerArm);

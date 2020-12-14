@@ -34,11 +34,15 @@ public class ActorManager : MonoBehaviour
     }
     public void Damage()
     {
-        if (attributeMgr.isDenfense)
+        if (attributeMgr.isImmortal)
+        {
+
+        }
+      else  if (attributeMgr.isDenfense)
         {
             Blocked();
         }
-        else
+       else    
         {
             if (attributeMgr.HP > 0)
             {

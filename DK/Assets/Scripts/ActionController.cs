@@ -115,27 +115,25 @@ public class ActionController : MonoBehaviour
 
             }
             //举盾防御
+            int layerIndex = mAnimator.GetLayerIndex("denfense");
             if (leftIsShield) //如果左手有盾
             {
-                if (CanDefence())
+               
+                if (CanDefence() && mInput.denfence)
                 {
-                    mAnimator.SetBool("defence", mInput.denfence);
-
-                    int layerIndex = mAnimator.GetLayerIndex("denfense");
-                    LerpWeight(layerIndex, 1, 1f);
+                    mAnimator.SetBool("defence", true);     
+                    LerpWeight(layerIndex, 1, 0.5f);
                 }
                 else
                 {
                     mAnimator.SetBool("defence", false);
-                 //   int layerIndex = mAnimator.GetLayerIndex("denfense");
-                   // LerpWeight(layerIndex, 0, 1f);
+                    LerpWeight(layerIndex, 0, 0.1f);
                 }
 
             }
             else
             {
-                int layerIndex = mAnimator.GetLayerIndex("denfense");
-                LerpWeight(layerIndex, 0, 1f);
+                LerpWeight(layerIndex, 0, 0.1f);
             }
            //翻滚
             if (mInput.roll || rigbody.velocity.magnitude > rollthreshold)
@@ -179,7 +177,7 @@ public class ActionController : MonoBehaviour
 
     bool CanDefence()
     {
-        return CheckState("Ground")  ;
+        return CheckState("Ground")   ;
     }
 
     void OnJumpEnter()
@@ -265,6 +263,18 @@ public class ActionController : MonoBehaviour
 
             deltaPos_Rm = (Vector3)obj * 0.4f;
         }         
+    }
+
+    public void OnStunned_Enter()
+    {
+        mInput.enableInput = false;
+        planeMoveVec = Vector3.zero;
+    }
+
+    public void OnCounterBack_Enter()
+    {
+        mInput.enableInput = false;
+        planeMoveVec = Vector3.zero;
     }
 
     public void OnAttack_Exit()

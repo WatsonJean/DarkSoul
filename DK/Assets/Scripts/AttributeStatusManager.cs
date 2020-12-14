@@ -18,6 +18,7 @@ public class AttributeStatusManager : IActorManagerInterface
     public bool isBlocked = false;
     public bool isHit = false;
     public bool isDie = false;
+    public bool isImmortal = false;//无敌
     public float AddHP(float val)
     {
         HP += val;
@@ -37,6 +38,7 @@ public class AttributeStatusManager : IActorManagerInterface
         isDenfense = actorManager.ac.CheckState("denfense1h", "denfense"); ;
         isBlocked = actorManager.ac.CheckState("blocked"); ;
         isHit = actorManager.ac.CheckState("hit"); ;
-        isDie = actorManager.ac.CheckState("die"); ;
+        isDie = actorManager.ac.CheckState("die");
+        isImmortal = isRoll || isJab;
     }
 }
