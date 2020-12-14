@@ -99,7 +99,7 @@ public class ActionController : MonoBehaviour
                 canAttackFlag = false;
                 mAnimator.SetTrigger("jump");         
             }
-            //攻击
+            //轻攻击
             if ((mInput.LB || mInput.RB) && CanAttack())
             {
                 if (mInput.LB && !leftIsShield)//左手攻击 没有拿盾的情况下才能攻击
@@ -112,7 +112,27 @@ public class ActionController : MonoBehaviour
                     mAnimator.SetBool("R0L1", false);
                     mAnimator.SetTrigger("attack");
                 }
+            }
 
+            //重攻击
+           else  if ((mInput.LT || mInput.RT) && CanAttack())
+            {
+                if (mInput.LT) //左手攻击 没有拿盾的情况下才能攻击
+                {
+                    if (leftIsShield)
+                    {
+                        mAnimator.SetTrigger("counterBack");
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else if (mInput.RT)//右手攻击
+                {
+                 //   mAnimator.SetBool("R0L1", false);
+                  //  mAnimator.SetTrigger("attack");
+                }
             }
             //举盾防御
             int layerIndex = mAnimator.GetLayerIndex("denfense");
@@ -122,18 +142,18 @@ public class ActionController : MonoBehaviour
                 if (CanDefence() && mInput.denfence)
                 {
                     mAnimator.SetBool("defence", true);     
-                    LerpWeight(layerIndex, 1, 0.5f);
+                    LerpWeight(layerIndex, 1, 0.6f);
                 }
                 else
                 {
                     mAnimator.SetBool("defence", false);
-                    LerpWeight(layerIndex, 0, 0.1f);
+                    LerpWeight(layerIndex, 0, 0.2f);
                 }
 
             }
             else
             {
-                LerpWeight(layerIndex, 0, 0.1f);
+                LerpWeight(layerIndex, 0, 0.2f);
             }
            //翻滚
             if (mInput.roll || rigbody.velocity.magnitude > rollthreshold)

@@ -32,37 +32,59 @@ public class ActorManager : MonoBehaviour
     {
         
     }
-    public void Damage()
+    public void TryDamage(WeaponController controller)
     {
-        if (attributeMgr.isImmortal)
+        if (attributeMgr.isCounterBackSuccess)//盾反成功
         {
-
+            controller.wm.actorManager.Stunned();
         }
-      else  if (attributeMgr.isDenfense)
+        else if (attributeMgr.isCounterBackFail)//盾反失败
+        {
+            DamageHP(-1,false);
+        }
+     else   if (attributeMgr.isImmortal)//无敌
+        {
+            return;
+        }
+      else  if (attributeMgr.isDenfense)//防御
         {
             Blocked();
         }
        else    
         {
-            if (attributeMgr.HP > 0)
-            {
-                if (attributeMgr.AddHP(-1) > 0)
-                {
-                    Hit();
-                }
-                else
-                    Die();
-            }
+            DamageHP(-1);
         }
 
+    }
+
+    void DamageHP(float val,bool showHitAnim = true)
+    {
+        if (attributeMgr.AddHP(val) > 0)
+        {
+            if (showHitAnim)
+            {
+                Hit();
+            }
+           
+        }
+        else
+            Die();
+    }
+    public void SetCounterBackEventFlag(bool val)
+    {
+       attributeMgr.isCounterBackEventFlag = val;
+    }
+    public void Hit()
+    {
+        ac.IssueTrigger("hit");
     }
     public void Blocked()
     {
         ac.IssueTrigger("blocked");
     }
-    public void Hit()
+    public void Stunned()
     {
-        ac.IssueTrigger("hit");
+        ac.IssueTrigger("stunned");
     }
 
     public void Die()

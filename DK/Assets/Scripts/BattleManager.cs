@@ -19,9 +19,11 @@ public class BattleManager : IActorManagerInterface
 
     void OnTriggerEnter(Collider other)
     {
+       
         if (other.tag =="weapon")
         {
-            actorManager.Damage();
+            WeaponController wc = other.GetComponentInParent<WeaponController>();
+            actorManager.TryDamage(wc);
             Debug.Log("被接触的物体为" + other.name);
         }
      

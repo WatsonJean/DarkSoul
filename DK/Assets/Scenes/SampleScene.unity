@@ -814,7 +814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745910343}
   m_LocalRotation: {x: -0, y: -0.35404155, z: -0, w: 0.9352297}
-  m_LocalPosition: {x: 2.86, y: 0, z: -2.77}
+  m_LocalPosition: {x: 6.8, y: 0, z: -7.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1131787486}
@@ -1481,6 +1481,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorManager: {fileID: 0}
+  weaponHandle_L: {fileID: 0}
+  weaponHandle_R: {fileID: 0}
+  weaponCollider_L: {fileID: 0}
+  weaponCollider_R: {fileID: 0}
+  weaponController_L: {fileID: 0}
+  weaponController_R: {fileID: 0}
 --- !u!4 &1131787486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400138, guid: 2f9d958fbcd96e44ca35a77a15e3187a,
@@ -1790,9 +1796,9 @@ MonoBehaviour:
   key_jump: space
   key_roll: 
   key_denfence: e
-  key_lockTarget: q
-  key_LT: t
-  key_RT: y
+  key_lockTarget: r
+  key_LT: q
+  key_RT: e
   key_LB: mouse 0
   key_RB: mouse 1
   enableLockTarget: 1
@@ -2524,6 +2530,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorManager: {fileID: 0}
+  weaponHandle_L: {fileID: 0}
+  weaponHandle_R: {fileID: 0}
+  weaponCollider_L: {fileID: 0}
+  weaponCollider_R: {fileID: 0}
+  weaponController_L: {fileID: 0}
+  weaponController_R: {fileID: 0}
 --- !u!114 &1965000427
 MonoBehaviour:
   m_ObjectHideFlags: 0

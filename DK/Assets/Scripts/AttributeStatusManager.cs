@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AttributeStatusManager : IActorManagerInterface
 {
-    public float HPMax = 5;
-    public float HP = 5;
+    public float HPMax = 100;
+    public float HP = 100;
 
     [Header("======StateFlag======")]
     public bool isGround = false;
@@ -18,7 +18,16 @@ public class AttributeStatusManager : IActorManagerInterface
     public bool isBlocked = false;
     public bool isHit = false;
     public bool isDie = false;
+    public bool isCounterBackState = false; //盾反动画中
+    public bool isCounterBackEventFlag = false; //盾反事件开启盾反效果
+    public bool isCounterBackSuccess = false; //盾反成功
+    public bool isCounterBackFail = false; //盾反失败
     public bool isImmortal = false;//无敌
+
+    private void Awake()
+    {
+        HP = HPMax;
+    }
     public float AddHP(float val)
     {
         HP += val;
@@ -40,5 +49,10 @@ public class AttributeStatusManager : IActorManagerInterface
         isHit = actorManager.ac.CheckState("hit"); ;
         isDie = actorManager.ac.CheckState("die");
         isImmortal = isRoll || isJab;
+        isCounterBackState = actorManager.ac.CheckState("counterBack");
+        isCounterBackSuccess = isCounterBackEventFlag;
+        isCounterBackFail = ! isCounterBackEventFlag && isCounterBackState;
+
     }
+
 }

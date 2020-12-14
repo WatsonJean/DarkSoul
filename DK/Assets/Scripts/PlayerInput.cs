@@ -7,9 +7,9 @@ public class PlayerInput : IUserInput
     ActionButton acBtn_run = new ActionButton();
     ActionButton acBtn_denfence = new ActionButton();
     ActionButton acLockTarget = new ActionButton();
-    ActionButton acBtn_LT = new ActionButton();
+    ActionButton acBtn_LT = new ActionButton();//重攻击
     ActionButton acBtn_RT = new ActionButton();
-    ActionButton acBtn_LB = new ActionButton();
+    ActionButton acBtn_LB = new ActionButton();//轻攻击
     ActionButton acBtn_RB = new ActionButton();
     void Update()
     {
@@ -30,12 +30,13 @@ public class PlayerInput : IUserInput
         run = RunInput();
         jump = JumpInput();
         roll = RollInput();
-        denfence = DenfenceInput()? !denfence : denfence;
+      
         lockTarget = LockTargetnput();
         LT = LTInput();
-        LB = LBInput();
         RT = RTInput();
+        LB = LBInput();  
         RB = RBInput();
+        denfence = acBtn_LB.isPressing; //必须在LB之后
     }
 
     protected virtual bool LTInput()
