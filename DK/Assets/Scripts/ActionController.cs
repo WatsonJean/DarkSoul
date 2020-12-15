@@ -99,6 +99,33 @@ public class ActionController : MonoBehaviour
                 canAttackFlag = false;
                 mAnimator.SetTrigger("jump");         
             }
+
+            //举盾防御
+            int layerIndex = mAnimator.GetLayerIndex("denfense");
+            if (leftIsShield) //如果左手有盾
+            {
+                if (mInput.denfence)
+                {
+
+                    if (CanDefence())
+                    {
+                        mAnimator.SetBool("defence", true);
+                        LerpWeight(layerIndex, 1, 0.3f);
+                    }
+                    else
+                    {                   
+                        LerpWeight(layerIndex, 0, 0.2f);
+                    }
+                }
+                else
+                {
+                    mAnimator.SetBool("defence", false);
+                }
+            }
+            else
+            {
+                LerpWeight(layerIndex, 0, 0.2f);
+            }
             //轻攻击
             if ((mInput.LB || mInput.RB) && CanAttack())
             {
@@ -134,27 +161,7 @@ public class ActionController : MonoBehaviour
                   //  mAnimator.SetTrigger("attack");
                 }
             }
-            //举盾防御
-            int layerIndex = mAnimator.GetLayerIndex("denfense");
-            if (leftIsShield) //如果左手有盾
-            {
-               
-                if (CanDefence() && mInput.denfence)
-                {
-                    mAnimator.SetBool("defence", true);     
-                    LerpWeight(layerIndex, 1, 0.6f);
-                }
-                else
-                {
-                    mAnimator.SetBool("defence", false);
-                    LerpWeight(layerIndex, 0, 0.2f);
-                }
 
-            }
-            else
-            {
-                LerpWeight(layerIndex, 0, 0.2f);
-            }
            //翻滚
             if (mInput.roll || rigbody.velocity.magnitude > rollthreshold)
             {
@@ -176,7 +183,6 @@ public class ActionController : MonoBehaviour
         rigbody.velocity = new Vector3(planeMoveVec.x, rigbody.velocity.y, planeMoveVec.z) + thrustVelocity;
         thrustVelocity = Vector3.zero;
         deltaPos_Rm = Vector3.zero;
-
     }
 
    public bool CheckState(string name,string layername = "Base Layer")
@@ -264,6 +270,16 @@ public class ActionController : MonoBehaviour
     {
         mInput.enableInput = false;
         planeMoveVec = Vector3.zero;
+        object ob = 0;
+        model.SendMessage("WeaponEnable", ob);
+    }
+
+    public void OnDieEnter()
+    {
+        mInput.enableInput = false;
+        planeMoveVec = Vector3.zero;
+        object ob = 0;
+        model.SendMessage("WeaponEnable", ob);
     }
     public void OnAttack1hA_Enter()
     {  
@@ -285,6 +301,7 @@ public class ActionController : MonoBehaviour
         }         
     }
 
+    //被盾反
     public void OnStunned_Enter()
     {
         mInput.enableInput = false;

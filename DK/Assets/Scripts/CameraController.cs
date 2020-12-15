@@ -9,11 +9,12 @@ public class CameraController : MonoBehaviour
     {
         public GameObject obj;
         public float halfHeight;
-
+        public ActorManager actorManager;
         public LockTargetObj(GameObject obj, float halfHeight)
         {
             this.obj = obj;
             this.halfHeight = halfHeight;
+            this.actorManager = obj.GetComponent<ActorManager>();
         }
     }
 
@@ -44,7 +45,6 @@ public class CameraController : MonoBehaviour
         actionController = playerHandle.GetComponent<ActionController>();
         model = actionController.model;
 
-
         if (!actionController.isAI)
         {
             cameraGo = Camera.main.gameObject;
@@ -73,7 +73,8 @@ public class CameraController : MonoBehaviour
             targetVec.y = 0;//保持同一平面
             playerHandle.transform.forward = Vector3.Slerp(playerHandle.transform.forward, targetVec.normalized,0.3f);
             cameraHandle.transform.LookAt(LockTarget.obj.transform);
-            if (Vector3.Distance(model.transform.position, LockTarget.obj.transform.position) > lockTargetMaxDis)
+            if (Vector3.Distance(model.transform.position, LockTarget.obj.transform.position) > lockTargetMaxDis || 
+                LockTarget.actorManager !=null && LockTarget.actorManager.attributeMgr.isDie)
             {
                 LockTarget = null;
             }
@@ -88,6 +89,7 @@ public class CameraController : MonoBehaviour
     }
     void ShowLockDot()
     {
+
         lockState = LockTarget != null;
         if (!actionController.isAI)
         {
@@ -124,13 +126,16 @@ public class CameraController : MonoBehaviour
                         LockTarget = null;
                         break;
                     }
-                   
-                    LockTarget =new LockTargetObj( item.gameObject, item.bounds.extents.y);
-                    model.transform.forward = playerHandle.transform.forward;
-                    break;
+                    LockTarget = new LockTargetObj(item.gameObject, item.bounds.extents.y);
+                    if (LockTarget.actorManager!=null && !LockTarget.actorManager.attributeMgr.isDie)//锁定没有死亡的敌人
+                    {
+                        model.transform.forward = playerHandle.transform.forward;
+                        break;
+                    }
+                    else
+                        LockTarget = null;
+         
                 }
             }
     }
-
-
 }

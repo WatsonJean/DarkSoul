@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttributeStatusManager : IActorManagerInterface
 {
-    public float HPMax = 100;
+    public float HPMax = 3;
     public float HP = 100;
 
     [Header("======StateFlag======")]
@@ -50,7 +50,7 @@ public class AttributeStatusManager : IActorManagerInterface
         isDie = actorManager.ac.CheckState("die");
         isImmortal = isRoll || isJab;
         isCounterBackState = actorManager.ac.CheckState("counterBack");
-        isCounterBackSuccess = isCounterBackEventFlag;
+        isCounterBackSuccess = isCounterBackEventFlag && isCounterBackState;
         isCounterBackFail = ! isCounterBackEventFlag && isCounterBackState;
 
     }

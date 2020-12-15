@@ -4,9 +4,9 @@ public class ActorManager : MonoBehaviour
 {
     public ActionController ac;
     [Header("=====auto Generate if null======")]
-    BattleManager battleMgr;
-    WeaponManager weaponMgr;
-    AttributeStatusManager attributeMgr;
+    public BattleManager battleMgr;
+    public WeaponManager weaponMgr;
+    public AttributeStatusManager attributeMgr;
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,6 +34,7 @@ public class ActorManager : MonoBehaviour
     }
     public void TryDamage(WeaponController controller)
     {
+        
         if (attributeMgr.isCounterBackSuccess)//盾反成功
         {
             controller.wm.actorManager.Stunned();
@@ -89,6 +90,7 @@ public class ActorManager : MonoBehaviour
 
     public void Die()
     {
+        battleMgr.EnableCollider(false);
         ac.IssueTrigger("die");
         ac.mInput.enableInput = false;
         if (ac.cameraController.lockState)
@@ -96,5 +98,6 @@ public class ActorManager : MonoBehaviour
             ac.cameraController.LockUnLock(); 
         }
         ac.cameraController.enabled = false;
+
     }
 }
