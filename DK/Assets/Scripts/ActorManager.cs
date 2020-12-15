@@ -32,16 +32,24 @@ public class ActorManager : MonoBehaviour
     {
         
     }
+
+    //受到伤害 处理
     public void TryDamage(WeaponController controller)
     {
-        
-        if (attributeMgr.isCounterBackSuccess)//盾反成功
+        //攻击方
+        ActorManager attacker = controller.wm.actorManager;
+        if (attributeMgr.isCounterBackSuccess)//盾反成功动画状态
         {
-            controller.wm.actorManager.Stunned();
+            if (battleMgr.CounterBackSelf(attacker.transform))//范围内
+                attacker.Stunned();
         }
-        else if (attributeMgr.isCounterBackFail)//盾反失败
+        else if (attributeMgr.isCounterBackFail)//盾反失败动画状态
         {
-            DamageHP(-1,false);
+           if (attacker.battleMgr.AttackFrontSelf(transform))//范围内
+            {
+                DamageHP(-1, false);
+            }
+         
         }
      else   if (attributeMgr.isImmortal)//无敌
         {
@@ -53,7 +61,8 @@ public class ActorManager : MonoBehaviour
         }
        else    
         {
-            DamageHP(-1);
+            if (attacker.battleMgr.AttackFrontSelf(transform))
+                DamageHP(-1);
         }
 
     }

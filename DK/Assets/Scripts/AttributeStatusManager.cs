@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttributeStatusManager : IActorManagerInterface
 {
-    public float HPMax = 3;
+    public float HPMax = 100;
     public float HP = 100;
 
     [Header("======StateFlag======")]

@@ -314,6 +314,11 @@ public class ActionController : MonoBehaviour
         planeMoveVec = Vector3.zero;
     }
 
+    public void OnCounterBack_Exit()
+    {
+        object ob = 0;
+        model.SendMessage("SetCounterBack", ob);
+    }
     public void OnAttack_Exit()
     {
 
