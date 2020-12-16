@@ -7,6 +7,8 @@ public class ActorManager : MonoBehaviour
     public BattleManager battleMgr;
     public WeaponManager weaponMgr;
     public AttributeStatusManager attributeMgr;
+    public DirectorManager directorMgr;
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -15,6 +17,7 @@ public class ActorManager : MonoBehaviour
         weaponMgr = Bind<WeaponManager>(ac.model);   
         battleMgr = Bind<BattleManager>(sensorTrans.gameObject);
         attributeMgr = Bind<AttributeStatusManager>(gameObject);
+        directorMgr = Bind<DirectorManager>(gameObject);
     }
 
     T Bind<T>(GameObject go) where T: IActorManagerInterface
@@ -97,9 +100,10 @@ public class ActorManager : MonoBehaviour
         ac.IssueTrigger("stunned");
     }
 
-    public void Die()
+    public void Die(bool showAnim = true)
     {
         battleMgr.EnableCollider(false);
+
         ac.IssueTrigger("die");
         ac.mInput.enableInput = false;
         if (ac.cameraController.lockState)
@@ -108,5 +112,10 @@ public class ActorManager : MonoBehaviour
         }
         ac.cameraController.enabled = false;
 
+    }
+
+    public void LockActorController(bool val)
+    {
+        ac.SetBool("lock", val);
     }
 }

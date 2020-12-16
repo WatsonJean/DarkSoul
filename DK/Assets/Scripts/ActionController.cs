@@ -15,7 +15,7 @@ public class ActionController : MonoBehaviour
     [Header("======  PhysicMaterial Setting ======")]
     public PhysicMaterial phy_Mat_zero;
     public PhysicMaterial phy_Mat_one;
-    Animator mAnimator;
+    public Animator mAnimator;
     public IUserInput mInput;
     Rigidbody rigbody;
     CapsuleCollider capsuleCollider;
@@ -319,9 +319,15 @@ public class ActionController : MonoBehaviour
         object ob = 0;
         model.SendMessage("SetCounterBack", ob);
     }
+
+    public void OnLockEnter()
+    {
+        mInput.enableInput = false;
+        planeMoveVec = Vector3.zero;
+    }
+    
     public void OnAttack_Exit()
     {
-
         object ob = 0;
         model.SendMessage("WeaponEnable", ob);
     }
@@ -336,5 +342,10 @@ public class ActionController : MonoBehaviour
     public void IssueTrigger(string name)
     {
         mAnimator.SetTrigger(name);
+    }
+
+    public void SetBool(string key,bool val)
+    {
+        mAnimator.SetBool(key, val);
     }
 }
