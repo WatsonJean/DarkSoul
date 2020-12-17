@@ -25,7 +25,7 @@ public class BattleManager : IActorManagerInterface
         {
             WeaponController wc = other.GetComponentInParent<WeaponController>();
             actorManager.TryDamage(wc);
-            Debug.Log("被接触的物体为" + other.name);
+            Debug.Log("攻击我的的物体为 " + other.name);
         }
     
     }

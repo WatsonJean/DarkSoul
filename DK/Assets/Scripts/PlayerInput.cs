@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInput : IUserInput
 {
     ActionButton acBtn_run = new ActionButton();
+    ActionButton acBtn_action = new ActionButton();
     ActionButton acBtn_denfence = new ActionButton();
     ActionButton acLockTarget = new ActionButton();
     ActionButton acBtn_LT = new ActionButton();//重攻击
@@ -30,35 +31,23 @@ public class PlayerInput : IUserInput
         run = RunInput();
         jump = JumpInput();
         roll = RollInput();
-      
+       
         lockTarget = LockTargetnput();
-        LT = LTInput();
-        RT = RTInput();
-        LB = LBInput();  
-        RB = RBInput();
+        LT = GetKeyDown(acBtn_LT, key_LT);// LTInput();
+        RT = GetKeyDown(acBtn_RT, key_RT);//RTInput();
+        LB = GetKeyDown(acBtn_LB, key_LB);//LBInput();  
+        RB = GetKeyDown(acBtn_RB, key_RB);//RBInput();
+        action = GetKeyDown(acBtn_action, key_action);
         denfence = acBtn_LB.isPressing; //必须在LB之后
     }
 
-    protected virtual bool LTInput()
+    protected virtual bool GetKeyDown(ActionButton actionButton,string keyname)
     {
-        acBtn_LT.Tick(Input.GetKey(key_LT));
-        return acBtn_LT.isDown;
+        actionButton.Tick(Input.GetKey(keyname));
+        return actionButton.isDown;
     }
-    protected virtual bool LBInput()
-    {
-        acBtn_LB.Tick(Input.GetKey(key_LB));
-        return acBtn_LB.isDown;
-    }
-    protected virtual bool RTInput()
-    {
-        acBtn_RT.Tick(Input.GetKey(key_RT));
-        return acBtn_RT.isDown;
-    }
-    protected virtual bool RBInput()
-    {
-        acBtn_RB.Tick(Input.GetKey(key_RB));
-        return acBtn_RB.isDown;
-    }
+
+
     protected virtual void Input_XY()
     {
         inputX = Input.GetAxis("Horizontal");
@@ -77,11 +66,6 @@ public class PlayerInput : IUserInput
         return acBtn_run.isUp && acBtn_run.isDelaying;
     }
 
-    protected virtual bool DenfenceInput()
-    {
-        acBtn_denfence.Tick(Input.GetKey(key_denfence));
-        return acBtn_denfence.isDown;
-    }
     protected virtual bool RunInput()
     {
         if (!enableRun)

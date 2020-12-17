@@ -6,41 +6,43 @@ using UnityEngine.Timeline;
 [Serializable]
 public class StabPlayableBehaviour : PlayableBehaviour
 {
-    public GameObject newExposedReference;
+    public ActorManager actorMgr;
     public float newBehaviourVariable;
     PlayableDirector pd;
-    ActorManager ac;
+
     public override void OnPlayableCreate (Playable playable)
     {
         pd = playable.GetGraph().GetResolver() as PlayableDirector;
         //Debug.Log("OnPlayableCreate");
     }
 
+
+    public override void OnBehaviourPlay(Playable playable, FrameData info)
+    {
+     
+    }
+
+    public override void PrepareFrame(Playable playable, FrameData info)
+    {
+        actorMgr.LockActorController(true);
+    }
+
+    public override void OnBehaviourPause(Playable playable, FrameData info)
+    {
+        actorMgr.LockActorController(false);
+    }
     public override void OnGraphStart(Playable playable)
     {
 
-        foreach (PlayableBinding item in pd.playableAsset.outputs)
-        {
-            if (item.streamName == "AttackerScriptTrack" || item.streamName == "ReceiverScriptTrack")
-            {
-                ActorManager ac = pd.GetGenericBinding(item.sourceObject) as ActorManager;
-                ac.LockActorController(true);
-                //ac.Die();
-                
-            }
-        }
+        pd = playable.GetGraph().GetResolver() as PlayableDirector;
     }
 
     public override void OnGraphStop(Playable playable)
     {
-
-        foreach (PlayableBinding item in pd.playableAsset.outputs)
+        if (pd)
         {
-            if (item.streamName == "AttackerScriptTrack" || item.streamName == "ReceiverScriptTrack")
-            {
-                ActorManager ac = pd.GetGenericBinding(item.sourceObject) as ActorManager;
-                ac.LockActorController(false);
-            }
+            pd.playableAsset = null;
         }
+
     }
 }

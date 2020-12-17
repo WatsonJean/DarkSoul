@@ -28,9 +28,12 @@ public class ActionController : MonoBehaviour
     bool lockDirection = false;
     bool isGround = false;
     bool canAttackFlag = true;
-
     public bool leftIsShield = true;
     public bool isAI = false;
+
+    public delegate void OnActionDelegate();
+    public event OnActionDelegate OnActionEvents;
+
     void Awake()
     {
         rigbody = GetComponent<Rigidbody>();
@@ -173,6 +176,11 @@ public class ActionController : MonoBehaviour
             {
                 mAnimator.SetTrigger("jab");
                 canAttackFlag = false;
+            }
+
+            if (mInput.action)
+            {
+                OnActionEvents.Invoke();
             }
         }
     }

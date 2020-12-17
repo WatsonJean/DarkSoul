@@ -9,41 +9,57 @@ public class DirectorManager : IActorManagerInterface
     PlayableDirector pd;
     public TimelineAsset timelineAsset_stab;
 
-    public ActorManager attacker;
-    public ActorManager receiver;
     void Awake()
     {
         pd = GetComponent<PlayableDirector>();
         pd.playOnAwake = false;
-       
+        pd.playableAsset = null;
     }
     private void Start()
     {
-        SetTimeline_Stab();
+    
     }
 
-    public void SetTimeline_Stab()
+    public void Play_Stab(string timelineName, ActorManager attacker, ActorManager receiver)
     {
+        if (pd.playableAsset != null)//说明在播放中
+            return;
+        if (timelineName != "Stab_timeline")
+            return;
         pd.playableAsset = Instantiate(timelineAsset_stab);
-        foreach (PlayableBinding track in pd.playableAsset.outputs)
+        TimelineAsset timeline = pd.playableAsset as TimelineAsset;
+        foreach (var track in timeline.GetOutputTracks())
         {
-            if (track.streamName == "AttackerScriptTrack")
+            if (track.name == "AttackerScriptTrack")
             {
-                pd.SetGenericBinding(track.sourceObject, attacker);
+                foreach (var clip in track.GetClips())
+                {
+                    StabPlayableClip stabClip = clip.asset as StabPlayableClip;
+                    pd.SetReferenceValue(stabClip.actorMgr.exposedName, attacker);
+                }
+
+                //pd.SetGenericBinding(track, attacker);
             }
-            else if (track.streamName == "ReceiverScriptTrack")
+            else if (track.name == "ReceiverScriptTrack")
             {
-                pd.SetGenericBinding(track.sourceObject, receiver);
+                foreach (var clip in track.GetClips())
+                {
+                    StabPlayableClip stabClip = clip.asset as StabPlayableClip;
+                    pd.SetReferenceValue(stabClip.actorMgr.exposedName, receiver);
+                }
+                // pd.SetGenericBinding(track, receiver);
             }
-            else if (track.streamName == "attacker")
+            else if (track.name == "attacker")
             {
-                pd.SetGenericBinding(track.sourceObject, attacker.ac.mAnimator);
+                pd.SetGenericBinding(track, attacker.ac.mAnimator);
             }
-            else if (track.streamName == "receiver")
+            else if (track.name == "receiver")
             {
-                pd.SetGenericBinding(track.sourceObject, receiver.ac.mAnimator);
+                pd.SetGenericBinding(track, receiver.ac.mAnimator);
             }
         }
+
+        Play();
     }
 
     public void Play()

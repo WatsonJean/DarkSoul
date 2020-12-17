@@ -85,7 +85,7 @@ MonoBehaviour:
     m_ExposedParameterNames: []
     m_AnimationCurves: {fileID: 0}
     m_Recordable: 0
-    m_PostExtrapolationMode: 1
+    m_PostExtrapolationMode: 0
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
@@ -423,10 +423,10 @@ MonoBehaviour:
   m_Name: StabPlayableClip
   m_EditorClassIdentifier: 
   template:
-    newExposedReference: {fileID: 0}
+    actorMgr: {fileID: 0}
     newBehaviourVariable: 0
-  newExposedReference:
-    exposedName: 
+  actorMgr:
+    exposedName: 13760
     defaultValue: {fileID: 0}
 --- !u!114 &1794931668647243182
 MonoBehaviour:
@@ -441,10 +441,10 @@ MonoBehaviour:
   m_Name: StabPlayableClip(Clone)
   m_EditorClassIdentifier: 
   template:
-    newExposedReference: {fileID: 0}
+    actorMgr: {fileID: 0}
     newBehaviourVariable: 0
-  newExposedReference:
-    exposedName: 060b71db84dd99e48905317b4570a4fb
+  actorMgr:
+    exposedName: 13762
     defaultValue: {fileID: 0}
 --- !u!114 &2195869197359463521
 MonoBehaviour:

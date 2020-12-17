@@ -8,7 +8,7 @@ public class ActorManager : MonoBehaviour
     public WeaponManager weaponMgr;
     public AttributeStatusManager attributeMgr;
     public DirectorManager directorMgr;
-    
+    public InterActorManager interActorMgr;
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,6 +18,8 @@ public class ActorManager : MonoBehaviour
         battleMgr = Bind<BattleManager>(sensorTrans.gameObject);
         attributeMgr = Bind<AttributeStatusManager>(gameObject);
         directorMgr = Bind<DirectorManager>(gameObject);
+        interActorMgr = Bind<InterActorManager>(sensorTrans.gameObject);
+        ac.OnActionEvents += DoAction;
     }
 
     T Bind<T>(GameObject go) where T: IActorManagerInterface
@@ -34,6 +36,16 @@ public class ActorManager : MonoBehaviour
     void Update()
     {
         
+    }
+    public void DoAction()
+    {
+        if (interActorMgr.casterEventsList.Count>0)
+        {
+            if (interActorMgr.casterEventsList[0].eventName == "Stab_timeline")
+            {
+                directorMgr.Play_Stab("Stab_timeline", this, interActorMgr.casterEventsList[0].actorManager);
+            }
+        }
     }
 
     //受到伤害 处理
