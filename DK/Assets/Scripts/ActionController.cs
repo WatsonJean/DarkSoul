@@ -56,7 +56,7 @@ public class ActionController : MonoBehaviour
         }
         if ( ! cameraController.lockState)//未锁定目标
         {
-            if (mInput.Dmag > 0.1)
+            if (mInput.Dmag > 0.1 && mInput.enabled)
                 model.transform.forward = Vector3.Slerp(model.transform.forward, mInput.CurrVec, 0.3f);
             if ( ! lockPlaneVec)
                 planeMoveVec = model.transform.forward* mInput .Dmag* moveSpeed;

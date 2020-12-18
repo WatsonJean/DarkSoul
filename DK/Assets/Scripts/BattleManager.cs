@@ -38,11 +38,11 @@ public class BattleManager : IActorManagerInterface
     public bool AttackFrontSelf(Transform receiver, float attackAngle = 45)
     {
 
-        return IsAttackFront(actorManager.transform, receiver, attackAngle);
+        return CheckFrontAngle(actorManager.transform, receiver, attackAngle);
     }
 
     // 攻击前方范围判断
-    public bool IsAttackFront(Transform attacker, Transform receiver, float attackAngle = 45)
+    public bool CheckFrontAngle(Transform attacker, Transform receiver, float attackAngle = 45)
     {
         Vector3 attackDir = receiver.position - attacker.position;
         return Vector3.Angle(attacker.forward, attackDir.normalized) <= attackAngle;
@@ -50,11 +50,11 @@ public class BattleManager : IActorManagerInterface
 
     public bool CounterBackSelf(Transform attacker, float angle = 45)
     {
-        return IsCounterBackFront(attacker, actorManager.transform, angle);
+        return IsFace2FaceFrontAngle(attacker, actorManager.transform, angle);
     }
 
     // 盾反前方判断
-    public bool IsCounterBackFront(Transform attacker, Transform counter, float angle = 45)
+    public bool IsFace2FaceFrontAngle(Transform attacker, Transform counter, float angle = 45)
     {
         //先判断是否面对面，在判断夹角
         Vector3 counterDir = (attacker.position-counter.position).normalized ;

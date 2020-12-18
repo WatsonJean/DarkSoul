@@ -20,13 +20,64 @@ public class DirectorManager : IActorManagerInterface
     
     }
 
+    TimelineAsset LoadTimelineAsset(string name)
+    {
+        TimelineAsset timelineAsset = Resources.Load("Timeline/" + name) as TimelineAsset;
+        return timelineAsset;
+    }
+    public void Play_OpenBox(string timelineName,  EnvItemBase box)
+    {
+        if (pd.state == PlayState.Playing)//说明在播放中
+            return;
+        if (timelineName != "openBox_timeline")
+            return;
+        TimelineAsset timeline = LoadTimelineAsset(timelineName);// Instantiate(timelineAsset_stab);
+        pd.playableAsset = timeline;
+       ActorManager  attacker = box.trigger;
+        foreach (var track in timeline.GetOutputTracks())
+        {
+            if (track.name == "box script")
+            {
+                foreach (var clip in track.GetClips())
+                {
+
+                    EnvItemActionClip eaclip = clip.asset as EnvItemActionClip;
+                    eaclip.EnvItem.exposedName = System.Guid.NewGuid().ToString();
+                    //print("eaclip.EnvItem.exposedName:"+ eaclip.EnvItem.exposedName);
+                
+                    pd.SetReferenceValue(eaclip.EnvItem.exposedName, box);
+                }
+            }
+            else if (track.name == "player script")
+            {
+                foreach (var clip in track.GetClips())
+                {
+
+                    StabPlayableClip stabClip = clip.asset as StabPlayableClip;
+                    stabClip.actorMgr.exposedName = System.Guid.NewGuid().ToString();
+                   // print("stabClip.actorMgr.exposedName:" + stabClip.actorMgr.exposedName);
+                    pd.SetReferenceValue(stabClip.actorMgr.exposedName, attacker);
+                }
+            }
+            else if (track.name == "player Track")
+            {
+                pd.SetGenericBinding(track, attacker.ac.mAnimator);
+            }
+            else if (track.name == "Box Track")
+            {
+                pd.SetGenericBinding(track, box.mAnimator);
+            }
+        }
+
+        Play();
+    }
     public void Play_Stab(string timelineName, ActorManager attacker, ActorManager receiver)
     {
-        if (pd.playableAsset != null)//说明在播放中
+        if (pd.state ==  PlayState.Playing)//说明在播放中
             return;
         if (timelineName != "Stab_timeline")
             return;
-        pd.playableAsset = Instantiate(timelineAsset_stab);
+        pd.playableAsset = LoadTimelineAsset(timelineName);
         TimelineAsset timeline = pd.playableAsset as TimelineAsset;
         foreach (var track in timeline.GetOutputTracks())
         {

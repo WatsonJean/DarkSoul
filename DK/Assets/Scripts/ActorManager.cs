@@ -14,11 +14,14 @@ public class ActorManager : MonoBehaviour
     {
         ac = GetComponent<ActionController>();
         Transform sensorTrans = transform.Find("Sensor");
-        weaponMgr = Bind<WeaponManager>(ac.model);   
-        battleMgr = Bind<BattleManager>(sensorTrans.gameObject);
+        weaponMgr = Bind<WeaponManager>(ac.model);
+        if (sensorTrans!=null)
+        {
+            battleMgr = Bind<BattleManager>(sensorTrans.gameObject);
+            interActorMgr = Bind<InterActorManager>(sensorTrans.gameObject);
+        }
         attributeMgr = Bind<AttributeStatusManager>(gameObject);
         directorMgr = Bind<DirectorManager>(gameObject);
-        interActorMgr = Bind<InterActorManager>(sensorTrans.gameObject);
         ac.OnActionEvents += DoAction;
     }
 
@@ -41,9 +44,30 @@ public class ActorManager : MonoBehaviour
     {
         if (interActorMgr.casterEventsList.Count>0)
         {
-            if (interActorMgr.casterEventsList[0].eventName == "Stab_timeline")
+            CasterEvent casterEvent = interActorMgr.casterEventsList[0];
+            if (casterEvent.active == false)
+                return;
+            if (casterEvent.eventName == "Stab_timeline")
             {
-                directorMgr.Play_Stab("Stab_timeline", this, interActorMgr.casterEventsList[0].actorManager);
+                if (battleMgr.IsFace2FaceFrontAngle(casterEvent.actorManager.ac.model.transform, ac.model.transform, 45)) 
+                {
+                  
+                    transform.position = casterEvent.actorManager.transform.position + casterEvent.actorManager.transform.forward*0.5f;
+                    ac.model.transform.LookAt(casterEvent.actorManager.transform,Vector3.up);
+                    directorMgr.Play_Stab("Stab_timeline", this, casterEvent.actorManager);
+                }
+            
+            }
+            else if (casterEvent.eventName == "openBox")
+            {
+                if (battleMgr.IsFace2FaceFrontAngle(casterEvent.transform, ac.model.transform, 15)) ;
+                {
+                    transform.position = casterEvent.itemBase.transform.position + casterEvent.itemBase.transform.forward * 1.5f;
+                    ac.model.transform.LookAt(casterEvent.itemBase.transform, Vector3.up);
+                    casterEvent.itemBase.trigger = this;//触发者
+                    //casterEvent.active = false;//箱子只能开一次
+                    directorMgr.Play_OpenBox("openBox_timeline", casterEvent.itemBase);
+                }
             }
         }
     }
@@ -55,12 +79,12 @@ public class ActorManager : MonoBehaviour
         ActorManager attacker = controller.wm.actorManager;
         if (attributeMgr.isCounterBackSuccess)//盾反成功动画状态
         {
-            if (battleMgr.CounterBackSelf(attacker.transform))//范围内
+            if (battleMgr.CounterBackSelf(attacker.ac.model.transform))//范围内
                 attacker.Stunned();
         }
         else if (attributeMgr.isCounterBackFail)//盾反失败动画状态
         {
-           if (attacker.battleMgr.AttackFrontSelf(transform))//范围内
+           if (attacker.battleMgr.AttackFrontSelf(ac.model.transform))//范围内
             {
                 DamageHP(-1, false);
             }

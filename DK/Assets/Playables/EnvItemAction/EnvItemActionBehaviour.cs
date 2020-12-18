@@ -4,13 +4,13 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 [Serializable]
-public class StabPlayableBehaviour : PlayableBehaviour
+public class EnvItemActionBehaviour : PlayableBehaviour
 {
-    public ActorManager actorMgr;
+    public EnvItemBase EnvItem;
     public float newBehaviourVariable;
     PlayableDirector pd;
 
-    public override void OnPlayableCreate (Playable playable)
+    public override void OnPlayableCreate(Playable playable)
     {
         pd = playable.GetGraph().GetResolver() as PlayableDirector;
         //Debug.Log("OnPlayableCreate");
@@ -19,30 +19,26 @@ public class StabPlayableBehaviour : PlayableBehaviour
 
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-     
+        EnvItem.Lock(true);
     }
 
     public override void PrepareFrame(Playable playable, FrameData info)
     {
-        actorMgr.LockActorController(true);
+
+      
     }
 
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        actorMgr.LockActorController(false);
+        EnvItem.Lock(false);
     }
     public override void OnGraphStart(Playable playable)
     {
 
-        pd = playable.GetGraph().GetResolver() as PlayableDirector;
     }
 
     public override void OnGraphStop(Playable playable)
     {
-        if (pd)
-        {
-            pd.playableAsset = null;
-        }
 
     }
 }
