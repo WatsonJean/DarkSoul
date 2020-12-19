@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Playables;
 
 public class ActorManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class ActorManager : MonoBehaviour
     public DirectorManager directorMgr;
     public InterActorManager interActorMgr;
     // Start is called before the first frame update
+    Vector3 actionPos;
+    Transform lookatActor;
+    bool moveActionPos = false;
     void Awake()
     {
         ac = GetComponent<ActionController>();
@@ -23,6 +27,7 @@ public class ActorManager : MonoBehaviour
         attributeMgr = Bind<AttributeStatusManager>(gameObject);
         directorMgr = Bind<DirectorManager>(gameObject);
         ac.OnActionEvents += DoAction;
+        actionPos = transform.position;
     }
 
     T Bind<T>(GameObject go) where T: IActorManagerInterface
@@ -38,12 +43,24 @@ public class ActorManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (moveActionPos)
+        {
+            transform.position = Vector3.Slerp(transform.position, actionPos, 0.12f);
+            ac.model.transform.LookAt(lookatActor, Vector3.up);
+        }
+        if (Vector3.Distance(transform.position, actionPos)<0.2f)
+        {
+            moveActionPos = false;
+        }
+
+
     }
     public void DoAction()
     {
         if (interActorMgr.casterEventsList.Count>0)
         {
+            if (directorMgr.pd.state == PlayState.Playing)//说明在播放中
+                return;
             CasterEvent casterEvent = interActorMgr.casterEventsList[0];
             if (casterEvent.active == false)
                 return;
@@ -51,22 +68,42 @@ public class ActorManager : MonoBehaviour
             {
                 if (battleMgr.IsFace2FaceFrontAngle(casterEvent.actorManager.ac.model.transform, ac.model.transform, 45)) 
                 {
-                  
-                    transform.position = casterEvent.actorManager.transform.position + casterEvent.actorManager.transform.forward*0.5f;
-                    ac.model.transform.LookAt(casterEvent.actorManager.transform,Vector3.up);
+                    actionPos = casterEvent.actorManager.transform.position + casterEvent.actorManager.transform.TransformVector(casterEvent.offset);
+                    moveActionPos = true;
+                    // transform.position = actionPos;
+                    lookatActor = casterEvent.actorManager.transform;
+                   // ac.model.transform.LookAt(casterEvent.actorManager.transform,Vector3.up);
                     directorMgr.Play_Stab("Stab_timeline", this, casterEvent.actorManager);
                 }
             
             }
             else if (casterEvent.eventName == "openBox")
             {
-                if (battleMgr.IsFace2FaceFrontAngle(casterEvent.transform, ac.model.transform, 15)) ;
+                if (battleMgr.IsFace2FaceFrontAngle(casterEvent.transform, ac.model.transform, 25)) ;
                 {
-                    transform.position = casterEvent.itemBase.transform.position + casterEvent.itemBase.transform.forward * 1.5f;
-                    ac.model.transform.LookAt(casterEvent.itemBase.transform, Vector3.up);
+                    actionPos = casterEvent.itemBase.transform.position + casterEvent.itemBase.transform.TransformVector(casterEvent.offset);
+                    moveActionPos = true;
+                    // transform.position = actionPos;
+                    lookatActor = casterEvent.itemBase.transform;
+                   // ac.model.transform.LookAt(casterEvent.itemBase.transform, Vector3.up);
                     casterEvent.itemBase.trigger = this;//触发者
                     //casterEvent.active = false;//箱子只能开一次
-                    directorMgr.Play_OpenBox("openBox_timeline", casterEvent.itemBase);
+                    directorMgr.Play_ItemAction("openBox_timeline", casterEvent.itemBase);
+                }
+            }
+
+            else if (casterEvent.eventName == "switchGear")
+            {
+                if (battleMgr.IsFace2FaceFrontAngle(casterEvent.transform, ac.model.transform, 25)) ;
+                {
+                    actionPos = casterEvent.itemBase.transform.position + casterEvent.itemBase.transform.TransformVector(casterEvent.offset);
+                   moveActionPos = true;
+                    //transform.position = actionPos;
+                    lookatActor = casterEvent.itemBase.transform;
+                  //  ac.model.transform.LookAt(casterEvent.itemBase.transform, Vector3.up);
+                    casterEvent.itemBase.trigger = this;//触发者
+                    //casterEvent.active = false;//只能开一次
+                    directorMgr.Play_ItemAction("switchgear_timeline", casterEvent.itemBase);
                 }
             }
         }

@@ -26,11 +26,18 @@ public class EnvItemBase : MonoBehaviour
     }
     public void IssueTrigger(string name)
     {
-        mAnimator.SetTrigger(name);
+        if (mAnimator)
+        {
+            mAnimator.SetTrigger(name);
+        }
+     
     }
 
     public void SetBool(string key, bool val)
     {
-        mAnimator.SetBool(key, val);
+        if (mAnimator)
+        {
+            mAnimator.SetBool(key, val);
+        }
     }
 }

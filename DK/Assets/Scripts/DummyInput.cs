@@ -10,6 +10,7 @@ public class DummyInput : IUserInput
         inputX = 0;
         inputY =0;
         RB = true;
+        
     }
 
     // Update is called once per frame

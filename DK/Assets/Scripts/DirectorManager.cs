@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 [RequireComponent(typeof(PlayableDirector))]
 public class DirectorManager : IActorManagerInterface
 {
-    PlayableDirector pd;
+    public PlayableDirector pd;
     public TimelineAsset timelineAsset_stab;
 
     void Awake()
@@ -25,18 +25,15 @@ public class DirectorManager : IActorManagerInterface
         TimelineAsset timelineAsset = Resources.Load("Timeline/" + name) as TimelineAsset;
         return timelineAsset;
     }
-    public void Play_OpenBox(string timelineName,  EnvItemBase box)
+    public void Play_ItemAction(string timelineName,  EnvItemBase box)
     {
-        if (pd.state == PlayState.Playing)//说明在播放中
-            return;
-        if (timelineName != "openBox_timeline")
-            return;
+
         TimelineAsset timeline = LoadTimelineAsset(timelineName);// Instantiate(timelineAsset_stab);
         pd.playableAsset = timeline;
        ActorManager  attacker = box.trigger;
         foreach (var track in timeline.GetOutputTracks())
         {
-            if (track.name == "box script")
+            if (track.name == "Item script")
             {
                 foreach (var clip in track.GetClips())
                 {
@@ -63,7 +60,7 @@ public class DirectorManager : IActorManagerInterface
             {
                 pd.SetGenericBinding(track, attacker.ac.mAnimator);
             }
-            else if (track.name == "Box Track")
+            else if (track.name == "Item Track")
             {
                 pd.SetGenericBinding(track, box.mAnimator);
             }
@@ -73,10 +70,7 @@ public class DirectorManager : IActorManagerInterface
     }
     public void Play_Stab(string timelineName, ActorManager attacker, ActorManager receiver)
     {
-        if (pd.state ==  PlayState.Playing)//说明在播放中
-            return;
-        if (timelineName != "Stab_timeline")
-            return;
+
         pd.playableAsset = LoadTimelineAsset(timelineName);
         TimelineAsset timeline = pd.playableAsset as TimelineAsset;
         foreach (var track in timeline.GetOutputTracks())
