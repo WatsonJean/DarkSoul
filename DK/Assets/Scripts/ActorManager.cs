@@ -123,7 +123,7 @@ public class ActorManager : MonoBehaviour
         {
            if (attacker.battleMgr.AttackFrontSelf(ac.model.transform))//范围内
             {
-                DamageHP(-1, false);
+                DamageHP(controller.GetATK(), false);
             }
          
         }
@@ -138,7 +138,7 @@ public class ActorManager : MonoBehaviour
        else    
         {
             if (attacker.battleMgr.AttackFrontSelf(transform))
-                DamageHP(-1);
+                DamageHP(controller.GetATK());
         }
 
     }
@@ -147,7 +147,7 @@ public class ActorManager : MonoBehaviour
     {
         if (attributeMgr.AddHP(val) > 0)
         {
-            if (showHitAnim)
+            if (showHitAnim )
             {
                 Hit();
             }
@@ -162,6 +162,7 @@ public class ActorManager : MonoBehaviour
     }
     public void Hit()
     {
+
         ac.IssueTrigger("hit");
     }
     public void Blocked()

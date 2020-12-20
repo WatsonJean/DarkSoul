@@ -47,4 +47,9 @@ public class WeaponManager : IActorManagerInterface
         actorManager.SetCounterBackEventFlag(b);
     }
 
+    public void EquipWeapon(string name)
+    {
+
+    }
+
 }

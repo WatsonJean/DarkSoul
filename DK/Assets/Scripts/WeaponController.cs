@@ -5,14 +5,15 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public WeaponManager wm;
-    void Start()
+    public WeaponData weaponData;
+    void Awake()
     {
-        
+        weaponData = GetComponentInChildren<WeaponData>();
     }
 
     // Update is called once per frame
-    void Update()
+    public float GetATK()
     {
-        
+        return wm.actorManager.attributeMgr.ATK + weaponData.data.ATK;
     }
 }

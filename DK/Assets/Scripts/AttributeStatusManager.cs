@@ -6,7 +6,7 @@ public class AttributeStatusManager : IActorManagerInterface
 {
     public float HPMax = 100;
     public float HP = 100;
-
+    public float ATK = 1;
     [Header("======StateFlag======")]
     public bool isGround = false;
     public bool isJump = false;
