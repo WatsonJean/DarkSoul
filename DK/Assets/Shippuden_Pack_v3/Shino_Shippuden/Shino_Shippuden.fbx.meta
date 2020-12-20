@@ -1,0 +1,256 @@
+fileFormatVersion: 2
+guid: 48096acf38eec6746a0780df448abd54
+timeCreated: 1513651499
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: 0.!joint_Master
+    100002: 1.joint_Center
+    100004: 10.joint_LeftWrist
+    100006: 11.joint_LeftPinky1
+    100008: 12.joint_LeftPinky2
+    100010: 13.joint_LeftPinky3
+    100012: 14.!joint_LeftPinkyTip
+    100014: 15.joint_LeftRing1
+    100016: 16.joint_LeftRing2
+    100018: 17.joint_LeftRing3
+    100020: 18.!joint_LeftRingTip
+    100022: 19.joint_LeftMiddle1
+    100024: 2.joint_Torso
+    100026: 20.joint_LeftMiddle2
+    100028: 21.joint_LeftMiddle3
+    100030: 22.!joint_LeftMiddleTip
+    100032: 23.joint_LeftIndex1
+    100034: 24.joint_LeftIndex2
+    100036: 25.joint_LeftIndex3
+    100038: 26.!joint_LeftIndexTip
+    100040: 27.joint_LeftThumb1
+    100042: 28.joint_LeftThumb2
+    100044: 29.!joint_ThumbTip
+    100046: 3.joint_Neck
+    100048: 30.joint_RightShoulder
+    100050: 31.joint_RightArm
+    100052: 32.joint_RightElbow
+    100054: 33.joint_RightWrist
+    100056: 34.joint_RightPinky1
+    100058: 35.joint_RightPinky2
+    100060: 36.joint_RightPinky3
+    100062: 37.!joint_RightPinkyTip
+    100064: 38.joint_RightRing1
+    100066: 39.joint_RightRing2
+    100068: 4.!joint_Head
+    100070: 40.joint_RightRing3
+    100072: 41.!joint_RightRingTip
+    100074: 42.!joint_RightHandTip
+    100076: 43.joint_RightMiddle1
+    100078: 44.joint_RightMiddle2
+    100080: 45.joint_RightMiddle3
+    100082: 46.!joint_RightMiddleTip
+    100084: 47.joint_RightIndex1
+    100086: 48.joint_RightIndex2
+    100088: 49.joint_RightIndex3
+    100090: 5.!joint_ago
+    100092: 50.!joint_RightIndexTip
+    100094: 51.joint_RightThumb1
+    100096: 52.joint_RightThumb2
+    100098: 53.!joint_RightThumbTip
+    100100: 54.!joint_HeadTip
+    100102: 55.!joint_LeftHandTip
+    100104: 56.!joint_agosaki
+    100106: 57.!joint_HipMasterTip
+    100108: 58.joint_LeftHip
+    100110: 59.!joint_CenterTip
+    100112: 6.joint_HipMaster
+    100114: 60.joint_LeftKnee
+    100116: 61.joint_LeftFoot
+    100118: 62.!IK_LeftHip
+    100120: 63.!IK_LeftHipTip
+    100122: 64.!joint_LeftToe
+    100124: 65.!IK_LeftToe
+    100126: 66.!IK_LeftToeTip
+    100128: 67.joint_RightHip
+    100130: 68.joint_RightKnee
+    100132: 69.joint_RightFoot
+    100134: 7.joint_LeftShoulder
+    100136: 70.!IK_RightHip
+    100138: 71.!IK_RightHipTip
+    100140: 72.!joint_RightToe
+    100142: 73.!IK_RightToe
+    100144: 74.!IK_RightToeTip
+    100146: 75.!joint_Sack1
+    100148: 76.joint_Sack2a
+    100150: 77.joint_Sack2b
+    100152: 78.!joint_Sack3
+    100154: 79.joint_Buckle1
+    100156: 8.joint_LeftArm
+    100158: 80.!joint_Buckle2
+    100160: 81.joint_Buckle3
+    100162: 82.!joint_Buckle4
+    100164: 83.!Root
+    100166: 84.!joint_LeftThumb0M
+    100168: 85.!joint_RightThumb0M
+    100170: 9.joint_LeftElbow
+    100172: //RootNode
+    100174: U_Char
+    400000: 0.!joint_Master
+    400002: 1.joint_Center
+    400004: 10.joint_LeftWrist
+    400006: 11.joint_LeftPinky1
+    400008: 12.joint_LeftPinky2
+    400010: 13.joint_LeftPinky3
+    400012: 14.!joint_LeftPinkyTip
+    400014: 15.joint_LeftRing1
+    400016: 16.joint_LeftRing2
+    400018: 17.joint_LeftRing3
+    400020: 18.!joint_LeftRingTip
+    400022: 19.joint_LeftMiddle1
+    400024: 2.joint_Torso
+    400026: 20.joint_LeftMiddle2
+    400028: 21.joint_LeftMiddle3
+    400030: 22.!joint_LeftMiddleTip
+    400032: 23.joint_LeftIndex1
+    400034: 24.joint_LeftIndex2
+    400036: 25.joint_LeftIndex3
+    400038: 26.!joint_LeftIndexTip
+    400040: 27.joint_LeftThumb1
+    400042: 28.joint_LeftThumb2
+    400044: 29.!joint_ThumbTip
+    400046: 3.joint_Neck
+    400048: 30.joint_RightShoulder
+    400050: 31.joint_RightArm
+    400052: 32.joint_RightElbow
+    400054: 33.joint_RightWrist
+    400056: 34.joint_RightPinky1
+    400058: 35.joint_RightPinky2
+    400060: 36.joint_RightPinky3
+    400062: 37.!joint_RightPinkyTip
+    400064: 38.joint_RightRing1
+    400066: 39.joint_RightRing2
+    400068: 4.!joint_Head
+    400070: 40.joint_RightRing3
+    400072: 41.!joint_RightRingTip
+    400074: 42.!joint_RightHandTip
+    400076: 43.joint_RightMiddle1
+    400078: 44.joint_RightMiddle2
+    400080: 45.joint_RightMiddle3
+    400082: 46.!joint_RightMiddleTip
+    400084: 47.joint_RightIndex1
+    400086: 48.joint_RightIndex2
+    400088: 49.joint_RightIndex3
+    400090: 5.!joint_ago
+    400092: 50.!joint_RightIndexTip
+    400094: 51.joint_RightThumb1
+    400096: 52.joint_RightThumb2
+    400098: 53.!joint_RightThumbTip
+    400100: 54.!joint_HeadTip
+    400102: 55.!joint_LeftHandTip
+    400104: 56.!joint_agosaki
+    400106: 57.!joint_HipMasterTip
+    400108: 58.joint_LeftHip
+    400110: 59.!joint_CenterTip
+    400112: 6.joint_HipMaster
+    400114: 60.joint_LeftKnee
+    400116: 61.joint_LeftFoot
+    400118: 62.!IK_LeftHip
+    400120: 63.!IK_LeftHipTip
+    400122: 64.!joint_LeftToe
+    400124: 65.!IK_LeftToe
+    400126: 66.!IK_LeftToeTip
+    400128: 67.joint_RightHip
+    400130: 68.joint_RightKnee
+    400132: 69.joint_RightFoot
+    400134: 7.joint_LeftShoulder
+    400136: 70.!IK_RightHip
+    400138: 71.!IK_RightHipTip
+    400140: 72.!joint_RightToe
+    400142: 73.!IK_RightToe
+    400144: 74.!IK_RightToeTip
+    400146: 75.!joint_Sack1
+    400148: 76.joint_Sack2a
+    400150: 77.joint_Sack2b
+    400152: 78.!joint_Sack3
+    400154: 79.joint_Buckle1
+    400156: 8.joint_LeftArm
+    400158: 80.!joint_Buckle2
+    400160: 81.joint_Buckle3
+    400162: 82.!joint_Buckle4
+    400164: 83.!Root
+    400166: 84.!joint_LeftThumb0M
+    400168: 85.!joint_RightThumb0M
+    400170: 9.joint_LeftElbow
+    400172: //RootNode
+    400174: U_Char
+    4300000: U_Char
+    9500000: //RootNode
+    13700000: U_Char
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: '
+
+      Imported file ''Shino_Shippuden'' conversion failed: Required human bone ''Head''
+      not found
+
+
+'
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Samurai_Katana/Samurai_Katana.unity
+- path: Assets/Scenes/SampleScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

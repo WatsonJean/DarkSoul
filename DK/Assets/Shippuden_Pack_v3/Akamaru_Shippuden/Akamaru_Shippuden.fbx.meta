@@ -1,0 +1,182 @@
+fileFormatVersion: 2
+guid: aa774cfea1abd6a45b9fe7e68b322252
+timeCreated: 1513650820
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: 0.!joint_Center
+    100002: 1.joint_NBone1
+    100004: 10.!joint_++++NBone3
+    100006: 11.joint_NBone4
+    100008: 12.joint_+NBone4
+    100010: 13.joint_++NBone4
+    100012: 14.!joint_+++NBone4
+    100014: 15.!joint_++++NBone4
+    100016: 16.joint_NBone5
+    100018: 17.joint_+NBone5
+    100020: 18.joint_++NBone5
+    100022: 19.joint_+++NBone5
+    100024: 2.joint_+NBone1
+    100026: 20.!joint_++++NBone5
+    100028: 21.joint_NBone6
+    100030: 22.joint_+NBone6
+    100032: 23.joint_++NBone6
+    100034: 24.joint_+++NBone6
+    100036: 25.!joint_++++NBone6
+    100038: 26.joint_NBone7
+    100040: 27.joint_+NBone7
+    100042: 28.joint_++NBone7
+    100044: 29.!joint_+++NBone7
+    100046: 3.!joint_++NBone1
+    100048: 30.!joint_++++NBone7
+    100050: 31.!joint_+++++NBone7
+    100052: 32.!joint_++++++NBone7
+    100054: 33.!joint_+++++++NBone7
+    100056: 34.!joint_++++++++NBone7
+    100058: 35.!joint_NBone8
+    100060: 36.!joint_NBone9
+    100062: 37.!joint_NBone10
+    100064: 38.!joint_NBone11
+    100066: 39.!joint_NBone12
+    100068: 4.joint_NBone2
+    100070: 40.!joint_NBone13
+    100072: 41.!joint_NBone14
+    100074: 42.!joint_NBone15
+    100076: 43.!joint_NBone16
+    100078: 44.!joint_NBone17
+    100080: 45.!joint_NBone18
+    100082: 46.!joint_NBone19
+    100084: 47.!joint_NBone20
+    100086: 48.!joint_NBone21
+    100088: 49.!joint_NBone22
+    100090: 5.!joint_+NBone2
+    100092: 50.!joint_NBone23
+    100094: 51.!Root
+    100096: 6.joint_NBone3
+    100098: 7.joint_+NBone3
+    100100: 8.joint_++NBone3
+    100102: 9.!joint_+++NBone3
+    100104: //RootNode
+    100106: U_Char
+    400000: 0.!joint_Center
+    400002: 1.joint_NBone1
+    400004: 10.!joint_++++NBone3
+    400006: 11.joint_NBone4
+    400008: 12.joint_+NBone4
+    400010: 13.joint_++NBone4
+    400012: 14.!joint_+++NBone4
+    400014: 15.!joint_++++NBone4
+    400016: 16.joint_NBone5
+    400018: 17.joint_+NBone5
+    400020: 18.joint_++NBone5
+    400022: 19.joint_+++NBone5
+    400024: 2.joint_+NBone1
+    400026: 20.!joint_++++NBone5
+    400028: 21.joint_NBone6
+    400030: 22.joint_+NBone6
+    400032: 23.joint_++NBone6
+    400034: 24.joint_+++NBone6
+    400036: 25.!joint_++++NBone6
+    400038: 26.joint_NBone7
+    400040: 27.joint_+NBone7
+    400042: 28.joint_++NBone7
+    400044: 29.!joint_+++NBone7
+    400046: 3.!joint_++NBone1
+    400048: 30.!joint_++++NBone7
+    400050: 31.!joint_+++++NBone7
+    400052: 32.!joint_++++++NBone7
+    400054: 33.!joint_+++++++NBone7
+    400056: 34.!joint_++++++++NBone7
+    400058: 35.!joint_NBone8
+    400060: 36.!joint_NBone9
+    400062: 37.!joint_NBone10
+    400064: 38.!joint_NBone11
+    400066: 39.!joint_NBone12
+    400068: 4.joint_NBone2
+    400070: 40.!joint_NBone13
+    400072: 41.!joint_NBone14
+    400074: 42.!joint_NBone15
+    400076: 43.!joint_NBone16
+    400078: 44.!joint_NBone17
+    400080: 45.!joint_NBone18
+    400082: 46.!joint_NBone19
+    400084: 47.!joint_NBone20
+    400086: 48.!joint_NBone21
+    400088: 49.!joint_NBone22
+    400090: 5.!joint_+NBone2
+    400092: 50.!joint_NBone23
+    400094: 51.!Root
+    400096: 6.joint_NBone3
+    400098: 7.joint_+NBone3
+    400100: 8.joint_++NBone3
+    400102: 9.!joint_+++NBone3
+    400104: //RootNode
+    400106: U_Char
+    4300000: U_Char
+    9500000: //RootNode
+    13700000: U_Char
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
