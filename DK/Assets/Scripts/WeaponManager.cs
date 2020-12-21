@@ -51,5 +51,8 @@ public class WeaponManager : IActorManagerInterface
     {
 
     }
-
+    public void ResetTrigger(string paraName)
+    {
+     actorManager.ac.mAnimator.ResetTrigger(paraName);
+    }
 }
