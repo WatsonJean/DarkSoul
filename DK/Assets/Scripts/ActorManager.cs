@@ -3,6 +3,7 @@ using UnityEngine.Playables;
 
 public class ActorManager : MonoBehaviour
 {
+    public ActorManager test;
     public ActionController ac;
     [Header("=====auto Generate if null======")]
     public BattleManager battleMgr;
@@ -52,7 +53,28 @@ public class ActorManager : MonoBehaviour
         {
             moveActionPos = false;
         }
+        if (test!=null)
+        {
+        
+            if (Input.GetKeyDown(KeyCode.G))
+            {
 
+                if (Vector3.Dot(ac.model.transform.forward, test.ac.model.transform.forward) > 0)
+                {
+                    print("前方");
+                }
+                else
+                    print("后方");
+
+                if (Vector3.Cross(ac.model.transform.forward, test.ac.model.transform.forward).y > 0)
+                {
+                    print("右方");
+                }
+                else
+                    print("左方");
+            }
+
+        }
 
     }
     public void DoAction()

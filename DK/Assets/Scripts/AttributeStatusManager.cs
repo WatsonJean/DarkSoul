@@ -42,7 +42,7 @@ public class AttributeStatusManager : IActorManagerInterface
         isJump = actorManager.ac.CheckState("jump"); ;
         isJab = actorManager.ac.CheckState("jab"); ;
         isRoll = actorManager.ac.CheckState("roll"); ;
-        isFall = actorManager.ac.CheckState("fall"); ;
+        isFall = actorManager.ac.CheckStateByTag("fall"); ;
         isAttack = actorManager.ac.CheckStateByTag("attack_R") || actorManager.ac.CheckStateByTag("attack_L");
         isDenfense = actorManager.ac.CheckState("denfense1h", "denfense"); ;
         isBlocked = actorManager.ac.CheckState("blocked"); ;

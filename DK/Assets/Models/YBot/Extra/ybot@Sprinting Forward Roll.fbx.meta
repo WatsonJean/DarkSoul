@@ -469,7 +469,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves:
-      - name: rollHeight
+      - name: rollVelocity
         curve:
           serializedVersion: 2
           curve:
@@ -483,40 +483,22 @@ ModelImporter:
             inWeight: 0.33333334
             outWeight: 0.33333334
           - serializedVersion: 3
-            time: 0.26640475
-            value: -0.46146482
-            inSlope: -4.670769
-            outSlope: -4.670769
+            time: 0.4020448
+            value: 3.278613
+            inSlope: 4.8423
+            outSlope: 4.8423
             tangentMode: 0
             weightedMode: 0
             inWeight: 0.33333334
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 0.4137944
-            value: -1.6425037
-            inSlope: -3.4686718
-            outSlope: -3.4686718
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.33333334
-          - serializedVersion: 3
-            time: 0.6793176
-            value: -1.7289027
-            inSlope: 1.9537139
-            outSlope: 1.9537139
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.33333334
+            outWeight: 0.14570038
           - serializedVersion: 3
             time: 1
             value: 0
-            inSlope: 3.2770379
-            outSlope: 3.2770379
+            inSlope: -0.7635485
+            outSlope: -0.7635485
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
+            inWeight: 0.11152876
             outWeight: 0.33333334
           preInfinity: 3
           postInfinity: 3

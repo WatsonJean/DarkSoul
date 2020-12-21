@@ -6,9 +6,10 @@ public class ActionController : MonoBehaviour
 {
     public float runSpeed = 5;
     public float walkSpeed = 1.4f;
-    public float JumpVelocity = 3f;
+    public float JumpVelocity = 5f;
     public float rollVelocity = 1f;
     public float rollthreshold = 4;//判断是否能翻滚的阈值
+    public float fallHeight = 0;
     public GameObject model;
     public CameraController cameraController;
     [Space(10)] 
@@ -165,8 +166,9 @@ public class ActionController : MonoBehaviour
                 }
             }
 
-           //翻滚
-            if (mInput.roll || rigbody.velocity.magnitude > rollthreshold)
+            //翻滚
+            //if (mInput.roll || rigbody.velocity.magnitude > rollthreshold)
+            if (mInput.roll )
             {
                 mAnimator.SetTrigger("roll");
                 canAttackFlag = false;
@@ -238,9 +240,22 @@ public class ActionController : MonoBehaviour
 
     public void OnFallEnter()
     {
+        mAnimator.SetFloat("fallHeight", 0);
+        fallHeight = 0;
         mInput.enableInput = false;
         lockPlaneVec = true;
+        canAttackFlag = false; 
+    }
 
+    public void OnFallUpdate()
+    {
+        mAnimator.SetFloat("fallHeight", rigbody.velocity.magnitude);
+    }
+
+    public void OnFallEnd()
+    {
+       // fallHeight = 0;
+        planeMoveVec = Vector3.zero;
     }
     public void OnGroundEnter()
     {
@@ -258,12 +273,20 @@ public class ActionController : MonoBehaviour
 
     public void OnRollEnter()
     {
-        thrustVelocity =  new Vector3(0, rollVelocity, 0);
+       // thrustVelocity = model.transform.forward * mAnimator.GetFloat("jabVelocity");
+       // thrustVelocity = new Vector3(planeMoveVec.x, 0, planeMoveVec.z) * 50;
+        //thrustVelocity =  new Vector3(0, rollVelocity, 0);
         mInput.enableInput = false;
         lockPlaneVec = true;
         lockDirection = true;
-    } 
-     public void OnJabEnter()
+    }
+
+    public void OnRollUpdate()
+    {
+        thrustVelocity = model.transform.forward * mAnimator.GetFloat("rollVelocity");
+
+    }
+    public void OnJabEnter()
     {
         mInput.enableInput = false;
         lockPlaneVec = true;
