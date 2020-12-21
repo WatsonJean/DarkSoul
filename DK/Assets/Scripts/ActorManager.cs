@@ -3,7 +3,6 @@ using UnityEngine.Playables;
 
 public class ActorManager : MonoBehaviour
 {
-    public ActorManager test;
     public ActionController ac;
     [Header("=====auto Generate if null======")]
     public BattleManager battleMgr;
@@ -53,28 +52,7 @@ public class ActorManager : MonoBehaviour
         {
             moveActionPos = false;
         }
-        if (test!=null)
-        {
-        
-            if (Input.GetKeyDown(KeyCode.G))
-            {
 
-                if (Vector3.Dot(ac.model.transform.forward, test.ac.model.transform.forward) > 0)
-                {
-                    print("前方");
-                }
-                else
-                    print("后方");
-
-                if (Vector3.Cross(ac.model.transform.forward, test.ac.model.transform.forward).y > 0)
-                {
-                    print("右方");
-                }
-                else
-                    print("左方");
-            }
-
-        }
 
     }
     public void DoAction()
@@ -131,6 +109,8 @@ public class ActorManager : MonoBehaviour
         }
     }
 
+
+
     //受到伤害 处理
     public void TryDamage(WeaponController controller)
     {
@@ -145,7 +125,7 @@ public class ActorManager : MonoBehaviour
         {
            if (attacker.battleMgr.AttackFrontSelf(ac.model.transform))//范围内
             {
-                DamageHP(controller.GetATK(), false);
+                DamageHP(controller, false);
             }
          
         }
@@ -160,18 +140,18 @@ public class ActorManager : MonoBehaviour
        else    
         {
             if (attacker.battleMgr.AttackFrontSelf(transform))
-                DamageHP(controller.GetATK());
+                DamageHP(controller);
         }
 
     }
 
-    void DamageHP(float val,bool showHitAnim = true)
+    void DamageHP(WeaponController controller ,bool showHitAnim = true)
     {
-        if (attributeMgr.AddHP(val) > 0)
+        if (attributeMgr.AddHP(controller.GetATK()) > 0)
         {
             if (showHitAnim )
             {
-                Hit();
+                Hit(controller.wm.actorManager);
             }
            
         }
@@ -182,10 +162,30 @@ public class ActorManager : MonoBehaviour
     {
        attributeMgr.isCounterBackEventFlag = val;
     }
-    public void Hit()
+    public void Hit(ActorManager attacker)
     {
 
         ac.IssueTrigger("hit");
+        Vector3 dir = (attacker.ac.model.transform.position - ac.model.transform.position).normalized;
+        //判断攻击在自己的前后方
+        bool isForward = Vector3.Dot(ac.model.transform.forward, dir) > 0 ? true : false;
+        //判断攻击在自己的左右方
+        bool isRight = Vector3.Dot(ac.model.transform.right, dir) > 0 ? true : false;
+
+        Vector3 v1 = Vector3.ProjectOnPlane(ac.model.transform.forward, Vector3.up);
+        Vector3 v2 = Vector3.ProjectOnPlane(dir, Vector3.up);
+        float angle = Vector3.Angle(v1, v2);// 夹角 
+
+        //如果攻击者在自己后方，或者在前方并且攻击角度小于30度，播放前方受击动画
+        if (! isForward || isForward && angle < 30)
+        {
+            ac.SetFloat("hitType", 0);
+        }
+        else //根据左右方位决定播放动画
+        {
+            ac.SetFloat("hitType", isRight ? 1 : -1);
+        }
+        print(angle);
     }
     public void Blocked()
     {

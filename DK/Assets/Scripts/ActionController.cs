@@ -379,4 +379,9 @@ public class ActionController : MonoBehaviour
     {
         mAnimator.SetBool(key, val);
     }
+
+    public void SetFloat(string key, float val)
+    {
+        mAnimator.SetFloat(key, val);
+    }
 }
