@@ -10,7 +10,20 @@ public class WeaponFactory
     {
         dataBase = db;
     }
+    public GameObject CreateWeapon(string name, Transform parent)
+    {
+        GameObject obj = Resources.Load("weapon/" + name) as GameObject;
+        if (!obj)
+            return null;
+        GameObject wp = GameObject.Instantiate(obj);
+        if (parent != null)
+        {
+            wp.transform.parent = parent;
+        }
 
+        SetData(name, wp);
+        return wp;
+    }
     // Update is called once per frame
     public GameObject CreateWeapon(string name,Transform parent, Vector3 pos,Quaternion rotation )
     {
@@ -32,7 +45,6 @@ public class WeaponFactory
 
         SetData(name,wp);
         return wp;
-
     }
 
     public void SetData(string name,GameObject obj)

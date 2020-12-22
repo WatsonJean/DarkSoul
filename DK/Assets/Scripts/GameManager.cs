@@ -9,10 +9,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        InitWeaponDB();
     }
     void Start()
     {
-        InitWeaponDB();
+       
     }
 
     // Update is called once per frame

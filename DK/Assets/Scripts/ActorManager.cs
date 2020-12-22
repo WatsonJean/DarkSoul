@@ -28,6 +28,7 @@ public class ActorManager : MonoBehaviour
         directorMgr = Bind<DirectorManager>(gameObject);
         ac.OnActionEvents += DoAction;
         actionPos = transform.position;
+
     }
 
     T Bind<T>(GameObject go) where T: IActorManagerInterface
@@ -185,7 +186,7 @@ public class ActorManager : MonoBehaviour
         {
             ac.SetFloat("hitType", isRight ? 1 : -1);
         }
-        print(angle);
+
     }
     public void Blocked()
     {

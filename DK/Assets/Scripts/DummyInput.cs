@@ -9,7 +9,7 @@ public class DummyInput : IUserInput
     {
         inputX = 0;
         inputY =0;
-        RB = true;
+        //attack2 = true;
         
     }
 

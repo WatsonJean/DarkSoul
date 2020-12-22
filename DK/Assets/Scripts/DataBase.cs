@@ -13,6 +13,7 @@ public class WeaponDataModel
 {
     public float ATK;
     public string name;
+    public float Denfense;
 }
 
 public class DataBase 

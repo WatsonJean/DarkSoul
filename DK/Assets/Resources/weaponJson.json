@@ -1,3 +1,25 @@
 {
-  "weaponDatas": [ {"name": "AA","ATK":1}, {"name": "BB","ATK": 2},{ "name": "CC","ATK":3} ]
+  "weaponDatas": [
+    {
+      "name": "dun1",
+      "ATK": 1,
+       "Denfense": 1
+    },
+    {
+      "name": "dun2",
+      "ATK": 2,
+      "Denfense": 1
+    },
+    {
+      "name": "dao1",
+      "ATK": 2,
+      "Denfense": 0
+    },
+    {
+      "name": "dao2",
+      "ATK": 3,
+      "Denfense": 0
+    }
+
+  ]
 }

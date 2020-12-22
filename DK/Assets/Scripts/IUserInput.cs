@@ -11,10 +11,12 @@ public  abstract class IUserInput : MonoBehaviour
     public string key_roll;
     public string key_denfence  ;
     public string key_lockTarget;
-    public string key_LT;
-    public string key_RT;
-    public string key_LB;
-    public string key_RB;
+    public string key_skill1;
+    public string key_skill2;
+    public string key_skill3;
+    public string key_attack1;
+    public string key_attack2;
+    public string key_counterBack;
     public string key_action;
     [Header("=============输入开关=============")]
     public bool enableLockTarget = true;
@@ -42,10 +44,12 @@ public  abstract class IUserInput : MonoBehaviour
     public bool jump = false;
     public bool action = false;
     public bool roll = false;
-    public bool LT = false;
-    public bool RT = false;
-    public bool LB = false;
-    public bool RB = false;
+    public bool counterBack = false;
+    public bool skill1 = false;
+    public bool skill2 = false;
+    public bool skill3 = false;
+    public bool attack1 = false;
+    public bool attack2 = false;
     public bool lockTarget = false;
     //---------other
 

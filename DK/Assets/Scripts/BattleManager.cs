@@ -35,14 +35,14 @@ public class BattleManager : IActorManagerInterface
         capsuleCol.enabled = val;
     }
 
-    public bool AttackFrontSelf(Transform receiver, float attackAngle = 45)
+    public bool AttackFrontSelf(Transform receiver, float attackAngle = 70)
     {
 
         return CheckFrontAngle(actorManager.transform, receiver, attackAngle);
     }
 
     // 攻击前方范围判断
-    public bool CheckFrontAngle(Transform attacker, Transform receiver, float attackAngle = 45)
+    public bool CheckFrontAngle(Transform attacker, Transform receiver, float attackAngle = 70)
     {
         Vector3 attackDir = receiver.position - attacker.position;
         return Vector3.Angle(attacker.forward, attackDir.normalized) <= attackAngle;

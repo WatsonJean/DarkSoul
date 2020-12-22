@@ -8,10 +8,13 @@ public class PlayerInput : IUserInput
     ActionButton acBtn_action = new ActionButton();
     ActionButton acBtn_denfence = new ActionButton();
     ActionButton acLockTarget = new ActionButton();
-    ActionButton acBtn_LT = new ActionButton();//重攻击
-    ActionButton acBtn_RT = new ActionButton();
-    ActionButton acBtn_LB = new ActionButton();//轻攻击
-    ActionButton acBtn_RB = new ActionButton();
+    ActionButton acBtn_skill1 = new ActionButton();
+    ActionButton acBtn_skill2 = new ActionButton();
+    ActionButton acBtn_skill3 = new ActionButton();
+    ActionButton acBtn_attack1 = new ActionButton();
+    ActionButton acBtn_attack2 = new ActionButton();
+    ActionButton acBtn_counterBack = new ActionButton();
+    
     void Update()
     {
 
@@ -33,12 +36,14 @@ public class PlayerInput : IUserInput
         roll = RollInput();
        
         lockTarget = LockTargetnput();
-        LT = GetKeyDown(acBtn_LT, key_LT);// LTInput();
-        RT = GetKeyDown(acBtn_RT, key_RT);//RTInput();
-        LB = GetKeyDown(acBtn_LB, key_LB);//LBInput();  
-        RB = GetKeyDown(acBtn_RB, key_RB);//RBInput();
+        skill1 = GetKeyDown(acBtn_skill1, key_skill1);
+        skill2 = GetKeyDown(acBtn_skill2, key_skill2);
+        skill3 = GetKeyDown(acBtn_skill3, key_skill3);
+        attack1 = GetKeyDown(acBtn_attack1, key_attack1);
+        attack2 = GetKeyDown(acBtn_attack2, key_attack2);
+        counterBack = GetKeyDown(acBtn_counterBack, key_counterBack);
         action = GetKeyDown(acBtn_action, key_action);
-        denfence = acBtn_LB.isPressing; //必须在LB之后
+        denfence = acBtn_attack1.isPressing; //必须在LB之后
     }
 
     protected virtual bool GetKeyDown(ActionButton actionButton,string keyname)
@@ -47,6 +52,7 @@ public class PlayerInput : IUserInput
         return actionButton.isDown;
     }
 
+    
 
     protected virtual void Input_XY()
     {

@@ -10,16 +10,24 @@ public class WeaponManager : IActorManagerInterface
     public Collider  weaponCollider_R;
     public WeaponController weaponController_L;
     public WeaponController  weaponController_R;
+
+    public string left_weapon = "dun1";
+    public string right_weapon = "dao1";
     void Awake()
     {
         weaponHandle_L = transform.DeepFind("weaponHandle_L");
         weaponHandle_R = transform.DeepFind("weaponHandle_R");
-        weaponCollider_L = weaponHandle_L.GetComponentInChildren<Collider>();
-        weaponCollider_R = weaponHandle_R.GetComponentInChildren<Collider>();
-        weaponCollider_L.enabled = false;
-        weaponCollider_R.enabled = false;
         weaponController_L = BindWeaponController(weaponHandle_L.gameObject);
         weaponController_R = BindWeaponController(weaponHandle_R.gameObject);
+
+    }
+
+    private void Start()
+    {
+        EquipWeapon_L(left_weapon, weaponController_L.weaponPos);
+        EquipWeapon_R(right_weapon, weaponController_R.weaponPos);
+        weaponCollider_L.enabled = false;
+        weaponCollider_R.enabled = false;
     }
 
     WeaponController BindWeaponController(GameObject go)
@@ -36,8 +44,17 @@ public class WeaponManager : IActorManagerInterface
     //攻击动画中挂载的事件
     public void WeaponEnable(int val)
     {
-        weaponCollider_L.enabled = actorManager.ac.CheckStateByTag("attack_L") && val > 0;
-        weaponCollider_R.enabled = actorManager.ac.CheckStateByTag("attack_R") &&  val >0;
+        if (!left_weapon.Contains("dun"))
+        {
+            weaponCollider_L.enabled = (actorManager.ac.CheckStateByTag("attack") || actorManager.ac.CheckStateByTag("skill")) && val > 0;
+        }
+        else
+            weaponCollider_L.enabled = false;
+
+
+        weaponCollider_R.enabled = (actorManager.ac.CheckStateByTag("attack")  || actorManager.ac.CheckStateByTag("skill") )&&  val >0;
+        //weaponCollider_L.enabled = false;
+        //weaponCollider_R.enabled = false;
     }
 
     //盾反动画中挂载的事件
@@ -47,9 +64,26 @@ public class WeaponManager : IActorManagerInterface
         actorManager.SetCounterBackEventFlag(b);
     }
 
-    public void EquipWeapon(string name)
+    public void EquipWeapon_L(string name,Transform parent)
     {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Destroy(parent.GetChild(i).gameObject);
+        }
+        GameObject go = GameManager.instance.weaponFactory.CreateWeapon(name, parent,Vector3.zero,Quaternion.identity);
+        weaponCollider_L = go.GetComponentInChildren<Collider>();
+        left_weapon = name;
+    }
 
+    public void EquipWeapon_R(string name, Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Destroy(parent.GetChild(i).gameObject);
+        }
+        GameObject go = GameManager.instance.weaponFactory.CreateWeapon(name, parent, Vector3.zero, Quaternion.identity);
+        weaponCollider_R = go.GetComponentInChildren<Collider>();
+        right_weapon = name;
     }
     public void ResetTrigger(string paraName)
     {

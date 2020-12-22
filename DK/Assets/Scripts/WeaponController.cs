@@ -5,8 +5,16 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public WeaponManager wm;
+    public Transform weaponPos;
     public WeaponData weaponData;
     void Awake()
+    {
+        weaponPos = transform.Find("weaponPos");
+      
+       
+    }
+
+    private void Start()
     {
         weaponData = GetComponentInChildren<WeaponData>();
     }
