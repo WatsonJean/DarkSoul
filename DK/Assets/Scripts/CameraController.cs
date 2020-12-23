@@ -72,7 +72,7 @@ public class CameraController : MonoBehaviour
             Vector3 targetVec = LockTarget.obj.transform.position - model.transform.position;
             targetVec.y = 0;//保持同一平面
             playerHandle.transform.forward = Vector3.Slerp(playerHandle.transform.forward, targetVec.normalized,0.3f);
-            cameraHandle.transform.LookAt(LockTarget.obj.transform.position+Vector3.up*0.5f);
+            cameraHandle.transform.LookAt(LockTarget.obj.transform.position+Vector3.up*0.8f);
             if (Vector3.Distance(model.transform.position, LockTarget.obj.transform.position) > lockTargetMaxDis || 
                 LockTarget.actorManager !=null && LockTarget.actorManager.attributeMgr.isDie)
             {

@@ -91,6 +91,8 @@ public class DirectorManager : IActorManagerInterface
                 {
                     StabPlayableClip stabClip = clip.asset as StabPlayableClip;
                     pd.SetReferenceValue(stabClip.actorMgr.exposedName, receiver);
+                    receiver.Die();
+                    stabClip.EndEvent = () => { receiver.ac.mAnimator.enabled = false; };
                 }
                 // pd.SetGenericBinding(track, receiver);
             }

@@ -9,7 +9,7 @@ public class StabPlayableBehaviour : PlayableBehaviour
     public ActorManager actorMgr;
     public float newBehaviourVariable;
     PlayableDirector pd;
-
+    public Action EndEvent;
     public override void OnPlayableCreate (Playable playable)
     {
         pd = playable.GetGraph().GetResolver() as PlayableDirector;
@@ -24,20 +24,20 @@ public class StabPlayableBehaviour : PlayableBehaviour
 
     public override void PrepareFrame(Playable playable, FrameData info)
     {
-        actorMgr.LockActorController(true);
+
     }
 
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        actorMgr.LockActorController(false);
+
     }
     public override void OnGraphStart(Playable playable)
     {
-
+        actorMgr.ac.mAnimator.enabled = true;
     }
 
     public override void OnGraphStop(Playable playable)
     {
-
+        EndEvent?.Invoke();
     }
 }

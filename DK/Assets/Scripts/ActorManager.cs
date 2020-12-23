@@ -67,14 +67,16 @@ public class ActorManager : MonoBehaviour
                 return;
             if (casterEvent.eventName == "Stab_timeline")
             {
-                if (battleMgr.IsFace2FaceFrontAngle(casterEvent.actorManager.ac.model.transform, ac.model.transform, 45)) 
+                if (casterEvent.actorManager.attributeMgr.isStunned && battleMgr.IsFace2FaceFrontAngle(casterEvent.actorManager.ac.model.transform, ac.model.transform, 45)) 
                 {
                     actionPos = casterEvent.actorManager.transform.position + casterEvent.actorManager.transform.TransformVector(casterEvent.offset);
                     moveActionPos = true;
                     // transform.position = actionPos;
                     lookatActor = casterEvent.actorManager.transform;
-                   // ac.model.transform.LookAt(casterEvent.actorManager.transform,Vector3.up);
+                    // ac.model.transform.LookAt(casterEvent.actorManager.transform,Vector3.up);
+                    casterEvent.actorManager.Die();
                     directorMgr.Play_Stab("Stab_timeline", this, casterEvent.actorManager);
+                  
                 }
             
             }
@@ -110,16 +112,18 @@ public class ActorManager : MonoBehaviour
         }
     }
 
-
-
     //受到伤害 处理
     public void TryDamage(WeaponController controller)
     {
+        if (attributeMgr.isImmortal)//无敌
+        {
+            return;
+        }
         //攻击方
         ActorManager attacker = controller.wm.actorManager;
-        if (attributeMgr.isCounterBackSuccess)//盾反成功动画状态
+        if (attributeMgr.isCounterBackSuccess)//盾反成功动画状态 只能盾反普攻
         {
-            if (battleMgr.CounterBackSelf(attacker.ac.model.transform))//范围内
+            if (attacker.attributeMgr.isNormalAttack && battleMgr.CounterBackSelf(attacker.ac.model.transform))//范围内
                 attacker.Stunned();
         }
         else if (attributeMgr.isCounterBackFail)//盾反失败动画状态
@@ -127,27 +131,33 @@ public class ActorManager : MonoBehaviour
            if (attacker.battleMgr.AttackFrontSelf(ac.model.transform))//范围内
             {
                 DamageHP(controller, false);
-            }
-         
+            }      
         }
-     else   if (attributeMgr.isImmortal)//无敌
+      
+      else  if (attributeMgr.isDenfense && battleMgr.IsFace2FaceFrontAngle(attacker.ac.model.transform, ac.model.transform, 70))//防御
         {
-            return;
-        }
-      else  if (attributeMgr.isDenfense)//防御
-        {
-            Blocked();
+                Blocked();       
         }
        else    
         {
             if (attacker.battleMgr.AttackFrontSelf(transform))
                 DamageHP(controller);
         }
-
     }
 
+    void HitEffect()
+    {
+        HittedMatEffect sc = ac.model.GetComponent<HittedMatEffect>();
+        if (sc == null)
+            sc = ac.model.AddComponent<HittedMatEffect>();
+        sc.Active();
+        sc.SetColor(Color.red);
+    }
     void DamageHP(WeaponController controller ,bool showHitAnim = true)
     {
+        if (attributeMgr.isImmortal)//无敌
+            return;
+        HitEffect();
         if (attributeMgr.AddHP(controller.GetATK()) > 0)
         {
             if (showHitAnim )
@@ -202,6 +212,7 @@ public class ActorManager : MonoBehaviour
         battleMgr.EnableCollider(false);
 
         ac.IssueTrigger("die");
+
         ac.mInput.enableInput = false;
         if (ac.cameraController.lockState)
         {

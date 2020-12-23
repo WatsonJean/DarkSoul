@@ -8,7 +8,7 @@ public class StabPlayableClip : PlayableAsset, ITimelineClipAsset
 {
     public StabPlayableBehaviour template = new StabPlayableBehaviour ();
     public ExposedReference<ActorManager> actorMgr;
-
+    public Action EndEvent;
     public ClipCaps clipCaps
     {
         get { return ClipCaps.None; }
@@ -18,7 +18,7 @@ public class StabPlayableClip : PlayableAsset, ITimelineClipAsset
     {
         var playable = ScriptPlayable<StabPlayableBehaviour>.Create (graph, template);
         StabPlayableBehaviour clone = playable.GetBehaviour ();
-
+        clone.EndEvent = EndEvent;
         clone.actorMgr = actorMgr.Resolve (graph.GetResolver ());
         return playable;
     }

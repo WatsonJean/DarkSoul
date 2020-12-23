@@ -464,7 +464,7 @@ ModelImporter:
             outWeight: 0
           - serializedVersion: 3
             time: 0.40853634
-            value: -7
+            value: -10
             inSlope: 0
             outSlope: 0
             tangentMode: 0

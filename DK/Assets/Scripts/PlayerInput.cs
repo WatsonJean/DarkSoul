@@ -43,7 +43,7 @@ public class PlayerInput : IUserInput
         attack2 = GetKeyDown(acBtn_attack2, key_attack2);
         counterBack = GetKeyDown(acBtn_counterBack, key_counterBack);
         action = GetKeyDown(acBtn_action, key_action);
-        denfence = acBtn_attack1.isPressing; //必须在LB之后
+        denfence = DenfenceInput(); 
     }
 
     protected virtual bool GetKeyDown(ActionButton actionButton,string keyname)
@@ -51,8 +51,6 @@ public class PlayerInput : IUserInput
         actionButton.Tick(Input.GetKey(keyname));
         return actionButton.isDown;
     }
-
-    
 
     protected virtual void Input_XY()
     {
@@ -70,6 +68,12 @@ public class PlayerInput : IUserInput
             return false;
         // acBtn_roll.Tick(Input.GetKey(key_roll));
         return acBtn_run.isUp && acBtn_run.isDelaying;
+    }
+
+    protected virtual bool DenfenceInput()
+    {
+        acBtn_denfence.Tick(Input.GetKey(key_denfence));
+        return acBtn_denfence.isPressing; 
     }
 
     protected virtual bool RunInput()

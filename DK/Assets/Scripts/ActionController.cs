@@ -158,6 +158,7 @@ public class ActionController : MonoBehaviour
             }
             else
             {
+                LerpWeight(layerIndex, 0, 0.2f);
                 mAnimator.SetBool("defence", false);
             }
         }
@@ -167,7 +168,7 @@ public class ActionController : MonoBehaviour
         }
 
         //盾反
-        if (mInput.counterBack && CanAttack() && leftIsShield)
+        if (mInput.counterBack && CanCounterBack() && leftIsShield)
         {
             mAnimator.SetTrigger("counterBack");
         }
@@ -211,6 +212,11 @@ public class ActionController : MonoBehaviour
     bool CanAttack()
     {
         return (CheckState("Ground") ||  CheckStateByTag("attack") || CheckStateByTag("skill")) && canAttackFlag;
+    }
+
+    bool CanCounterBack()
+    {
+        return (CheckState("blocked") || CheckState("Ground") || CheckStateByTag("attack") || CheckStateByTag("skill")) && canAttackFlag;
     }
 
     bool CanDefence()
@@ -314,6 +320,7 @@ public class ActionController : MonoBehaviour
         planeMoveVec = Vector3.zero;
         object ob = 0;
         model.SendMessage("WeaponEnable", ob);
+
     }
 
 

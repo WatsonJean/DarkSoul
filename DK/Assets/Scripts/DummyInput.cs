@@ -7,8 +7,8 @@ public class DummyInput : IUserInput
     // Start is called before the first frame update
     void Start()
     {
-        inputX = 0;
-        inputY =0;
+       // inputX = 0;
+        //inputY =0;
         //attack2 = true;
         
     }

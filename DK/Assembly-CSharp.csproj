@@ -95,6 +95,13 @@
     <Compile Include="Assets\Dynamic Sword Animset\Scripts\Animation_view.cs" />
     <Compile Include="Assets\Dynamic Sword Animset\Scripts\Blue_CameraControll.cs" />
     <Compile Include="Assets\Mixamo\Melee Axe Pack\Demo\CameraScroll.cs" />
+    <Compile Include="Assets\Scripts\AI\AttackState.cs" />
+    <Compile Include="Assets\Scripts\AI\EnemyAI.cs" />
+    <Compile Include="Assets\Scripts\AI\FSMMachine.cs" />
+    <Compile Include="Assets\Scripts\AI\IState.cs" />
+    <Compile Include="Assets\Scripts\AI\IdleState.cs" />
+    <Compile Include="Assets\Scripts\AI\PursueState.cs" />
+    <Compile Include="Assets\Scripts\AI\SkillAttackState.cs" />
     <Compile Include="Assets\Scripts\AcButtonTimer.cs" />
     <Compile Include="Assets\Scripts\ActionButton.cs" />
     <Compile Include="Assets\Scripts\ActionController.cs" />
@@ -102,7 +109,6 @@
     <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMClearSignals.cs" />
     <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMOnEnterAndExit.cs" />
     <Compile Include="Assets\Scripts\AnimatorStateMachine\FSMOnUpdate.cs" />
-    <Compile Include="Assets\Scripts\AttackAnimatorMsg.cs" />
     <Compile Include="Assets\Scripts\AttributeStatusManager.cs" />
     <Compile Include="Assets\Scripts\BattleManager.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
@@ -113,6 +119,7 @@
     <Compile Include="Assets\Scripts\EnvItemBase.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GroundSensor.cs" />
+    <Compile Include="Assets\Scripts\HittedMatEffect.cs" />
     <Compile Include="Assets\Scripts\IActorManagerInterface.cs" />
     <Compile Include="Assets\Scripts\IUserInput.cs" />
     <Compile Include="Assets\Scripts\InterActorManager.cs" />
@@ -169,6 +176,7 @@
     <None Include="Assets\Shippuden_Pack_v3\Gaara_Shippuden\Gaara_Shippuden.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Akamaru_Shippuden\Akamaru_Shippuden.MMD4Mecanim.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Asuma\Asuma.xml" />
+    <None Include="Assets\Shaders\TransparentRim.shader" />
     <None Include="Assets\Shippuden_Pack_v3\Neji_Shippuden\Neji_Shippuden.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Sai\Sai.MMD4Mecanim.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Ino_Shippuden\Ino_Shippuden.MMD4Mecanim.xml" />

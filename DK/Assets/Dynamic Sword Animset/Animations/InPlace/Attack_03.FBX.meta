@@ -457,16 +457,16 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.39525968
-        functionName: WeaponEnable
-        data: 
+      - time: 0.39116824
+        functionName: ResetTrigger
+        data: attack
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.42936268
-        functionName: ResetTrigger
-        data: attack
+      - time: 0.39525968
+        functionName: WeaponEnable
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
