@@ -6,16 +6,11 @@ public class PursueState : IState<ActorManager>
 {
     ActorManager target;
     float attackNum = 0;
-    public PursueState(ActorManager ac, FSMMachine<ActorManager> fsm) : base(ac, fsm)
+    public PursueState(ActorManager ac, FSMMachine<ActorManager> fsm,string name) : base(ac, fsm, name)
     {
         base.instance = ac;
-        base.machine = fsm;
     }
 
-    public override string GetState()
-    {
-        return "Pursue";
-    }
 
     public override void OnEnter(ActorManager obj )
     {
@@ -28,7 +23,8 @@ public class PursueState : IState<ActorManager>
 
     public override void OnExit()
     {
-
+        instance.ac.mInput.run = false;
+        instance.ac.mInput.inputY = 0;
     }
 
     public override void OnFixedUpdate(float time)
@@ -43,13 +39,16 @@ public class PursueState : IState<ActorManager>
             machine.ChangeState("Idle",null);
             return;
         }
-
+        Vector3 vec1 = Vector3.Project(target.transform.position - instance.transform.position, Vector3.forward);
         float dis = Vector3.Distance(target.transform.position, instance.transform.position);
-        if (dis >15f)
+
+        dis = vec1.magnitude;
+
+        if (dis >20f)
         {
             machine.ChangeState("Idle", null);
         }
-      else  if (dis >= 2.5f && dis <=15f)
+      else  if (dis >= 2.5f && dis <=20f)
         {
             instance.transform.LookAt(target.transform, Vector3.up);
             instance.ac.mInput.run = true;
@@ -59,8 +58,19 @@ public class PursueState : IState<ActorManager>
         {
             instance.ac.mInput.run = false;
             instance.ac.mInput.inputY =0;
-            machine.ChangeState("SkillAttack", target);
-            Debug.Log("进行攻击状态！");
+            attackNum = Random.value * 100;
+
+            if (attackNum < 25)
+                machine.ChangeState("Attack1", target);
+            else if (attackNum >= 25 && attackNum<50)
+                machine.ChangeState("Attack2", target);
+            else if (attackNum >= 50 && attackNum < 75)
+                machine.ChangeState("SkillAttack1", target);
+            else
+                machine.ChangeState("SkillAttack2", target);
+
+
+            Debug.Log("attackNum: "+ attackNum);
         }
     }
     void PlayAttack()

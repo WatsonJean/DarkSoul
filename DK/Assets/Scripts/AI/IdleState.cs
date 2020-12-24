@@ -6,21 +6,16 @@ public class IdleState : IState<ActorManager>
 {
     public float tempTime = 0;
     public float intervalTime = 1f;
-    public IdleState(ActorManager ac, FSMMachine<ActorManager> fsm) : base(ac, fsm)
+    public IdleState(ActorManager ac, FSMMachine<ActorManager> fsm,string name) : base(ac, fsm, name)
     {
         base.instance = ac;
-        base.machine = fsm;
     }
 
-    public override string GetState()
-    {
-        return "Idle";
-    }
 
     public override void OnEnter(ActorManager obj )
     {
         instance.ac.mInput.enableInput = false;
-        tempTime = -1;
+        tempTime = -1.5f;
     }
 
     public override void OnExit()
@@ -47,14 +42,14 @@ public class IdleState : IState<ActorManager>
     void Look()
     {
         int layerMask = 1 << LayerMask.NameToLayer("player");
-        Collider[] colliders = Physics.OverlapSphere(instance.transform.position, 15f, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(instance.transform.position, 20f, layerMask);
 
         if (colliders.Length <= 0)
             return;
         else
         {
             base.machine.ChangeState("Pursue", colliders[0].gameObject.GetComponent<ActorManager>());
-            Debug.Log(colliders[0].name);
+
         }
     }
     

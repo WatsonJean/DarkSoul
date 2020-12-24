@@ -6,11 +6,14 @@ public abstract  class IState<T> //抽象出的公共行为
 {
     public T instance;
     public FSMMachine<T> machine;
-    public IState(T instance, FSMMachine<T> machine)
+    public string stateName = "";
+    public IState(T instance, FSMMachine<T> machine,string stateName)
     {
         this.instance = instance;
         this.machine = machine;
+        this.stateName = stateName;
     }
+ 
     /// <summary>
     /// 状态进入
     /// </summary>
@@ -31,5 +34,6 @@ public abstract  class IState<T> //抽象出的公共行为
     /// <summary>
     /// 获得状态
     /// </summary>
-    public abstract string GetState();
+    public virtual string GetState() { return stateName; }
+
 }

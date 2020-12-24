@@ -57,7 +57,9 @@ using System.Collections.Generic;
             IState<T> _tmpState = GetState(state);       //要改变的状态不存在
             if (_tmpState == null)
             {
+       
                 Debug.LogWarningFormat("FSMSystem(容错)：该状态【{0}】不存在于状态机中！", state);
+                return;
             }
             if (CurrentState != null) //当前状态不为空
             {

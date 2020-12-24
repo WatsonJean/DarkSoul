@@ -33,11 +33,14 @@ public class StabPlayableBehaviour : PlayableBehaviour
     }
     public override void OnGraphStart(Playable playable)
     {
-        actorMgr.ac.mAnimator.enabled = true;
+      //  actorMgr.ac.mAnimator.enabled = true;
+        actorMgr.LockActorController(true);
     }
 
     public override void OnGraphStop(Playable playable)
     {
+        actorMgr.LockActorController(false);
         EndEvent?.Invoke();
+       
     }
 }

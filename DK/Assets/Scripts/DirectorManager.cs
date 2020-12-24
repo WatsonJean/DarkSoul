@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -25,7 +26,7 @@ public class DirectorManager : IActorManagerInterface
         TimelineAsset timelineAsset = Resources.Load("Timeline/" + name) as TimelineAsset;
         return timelineAsset;
     }
-    public void Play_ItemAction(string timelineName,  EnvItemBase box)
+    public void Play_ItemAction(string timelineName,  EnvItemBase box,Action action = null)
     {
 
         TimelineAsset timeline = LoadTimelineAsset(timelineName);// Instantiate(timelineAsset_stab);
@@ -52,7 +53,8 @@ public class DirectorManager : IActorManagerInterface
 
                     StabPlayableClip stabClip = clip.asset as StabPlayableClip;
                     stabClip.actorMgr.exposedName = System.Guid.NewGuid().ToString();
-                   // print("stabClip.actorMgr.exposedName:" + stabClip.actorMgr.exposedName);
+                    stabClip.EndEvent = action;
+                    // print("stabClip.actorMgr.exposedName:" + stabClip.actorMgr.exposedName);
                     pd.SetReferenceValue(stabClip.actorMgr.exposedName, attacker);
                 }
             }
@@ -68,7 +70,7 @@ public class DirectorManager : IActorManagerInterface
 
         Play();
     }
-    public void Play_Stab(string timelineName, ActorManager attacker, ActorManager receiver)
+    public void Play_Stab(string timelineName, ActorManager attacker, ActorManager receiver,Action action = null)
     {
 
         pd.playableAsset = LoadTimelineAsset(timelineName);

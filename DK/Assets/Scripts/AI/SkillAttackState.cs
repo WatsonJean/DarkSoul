@@ -7,15 +7,10 @@ public class SkillAttackState : IState<ActorManager>
     ActorManager target;
     bool endFlag = false;
 
-    public SkillAttackState(ActorManager ac, FSMMachine<ActorManager> fsm) : base(ac, fsm)
+    public SkillAttackState(ActorManager ac, FSMMachine<ActorManager> fsm, string name) : base(ac, fsm,name)
     {
         base.instance = ac;
-        base.machine = fsm;
-    }
 
-    public override string GetState()
-    {
-        return "SkillAttack";
     }
 
     public override void OnEnter(ActorManager obj )
@@ -32,8 +27,8 @@ public class SkillAttackState : IState<ActorManager>
 
     public override void OnExit()
     {
-        instance.ac.mInput.skill2 = false;
-
+        instance.ac.mInput.skill1 = false;
+        instance.ac.mInput.skill3 = false;
     }
 
 
@@ -50,11 +45,14 @@ public class SkillAttackState : IState<ActorManager>
             return;
         }
         instance.transform.LookAt(target.transform, Vector3.up);
-        instance.ac.mInput.skill2 = true;
+
+        instance.ac.mInput.skill3 = base.stateName == "SkillAttack1";
+        instance.ac.mInput.skill1 = base.stateName == "SkillAttack2";
         if (instance.attributeMgr.isSkillAttack)
         {
             endFlag = true;
-            instance.ac.mInput.skill2 = false;
+            instance.ac.mInput.skill3 = base.stateName == "SkillAttack1";
+            instance.ac.mInput.skill1 = base.stateName == "SkillAttack2";
         }
         if (endFlag && instance.attributeMgr.isGround)
         {

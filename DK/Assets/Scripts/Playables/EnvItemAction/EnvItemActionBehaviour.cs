@@ -20,6 +20,7 @@ public class EnvItemActionBehaviour : PlayableBehaviour
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
         EnvItem.Lock(true);
+
     }
 
     public override void PrepareFrame(Playable playable, FrameData info)
@@ -31,6 +32,7 @@ public class EnvItemActionBehaviour : PlayableBehaviour
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
         EnvItem.Lock(false);
+
     }
     public override void OnGraphStart(Playable playable)
     {

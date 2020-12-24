@@ -94,8 +94,22 @@
     <Compile Include="Assets\DefaultPlayables\Video\VideoScriptPlayableTrack.cs" />
     <Compile Include="Assets\Dynamic Sword Animset\Scripts\Animation_view.cs" />
     <Compile Include="Assets\Dynamic Sword Animset\Scripts\Blue_CameraControll.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\ParticleEffectsShowcase\Scripts\PEButtonScript.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\ParticleEffectsShowcase\Scripts\PEDestoryTimed.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\ParticleEffectsShowcase\Scripts\ParticleEffectsLibrary.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\ParticleEffectsShowcase\Scripts\UICanvasManager.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXButtonScript.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXFireProjectile.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXLoopScript.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXMouseOrbit.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXProjectileScript.cs" />
+    <Compile Include="Assets\Epic Toon FX\Demo\Scripts\ETFXSceneManager.cs" />
+    <Compile Include="Assets\Epic Toon FX\Scripts\ETFXLightFade.cs" />
+    <Compile Include="Assets\Epic Toon FX\Scripts\ETFXPitchRandomizer.cs" />
+    <Compile Include="Assets\Epic Toon FX\Scripts\ETFXRotation.cs" />
     <Compile Include="Assets\Mixamo\Melee Axe Pack\Demo\CameraScroll.cs" />
     <Compile Include="Assets\Scripts\AI\AttackState.cs" />
+    <Compile Include="Assets\Scripts\AI\DeadState.cs" />
     <Compile Include="Assets\Scripts\AI\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\AI\FSMMachine.cs" />
     <Compile Include="Assets\Scripts\AI\IState.cs" />
@@ -116,6 +130,8 @@
     <Compile Include="Assets\Scripts\DataBase.cs" />
     <Compile Include="Assets\Scripts\DirectorManager.cs" />
     <Compile Include="Assets\Scripts\DummyInput.cs" />
+    <Compile Include="Assets\Scripts\EffectManager.cs" />
+    <Compile Include="Assets\Scripts\Effectobj.cs" />
     <Compile Include="Assets\Scripts\EnvItemBase.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GroundSensor.cs" />
@@ -140,6 +156,7 @@
     <Compile Include="Assets\Scripts\WeaponData.cs" />
     <Compile Include="Assets\Scripts\WeaponFactory.cs" />
     <Compile Include="Assets\Scripts\WeaponManager.cs" />
+    <Compile Include="Assets\Scripts\levelDoor.cs" />
     <None Include="Assets\Shippuden_Pack_v3\Temari_Shippuden\Temari.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Kurenia\Kurenai.MMD4Mecanim.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Gai\Gai.xml" />
@@ -167,6 +184,7 @@
     <None Include="Assets\Shippuden_Pack_v3\Hinata_Shippuden\Hinata_Shippuden.MMD4Mecanim.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Sai\Sai.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Ten_Ten_Shippuden\Ten_Ten_Shippuden.xml" />
+    <None Include="Assets\Epic Toon FX\ETFX Readme.txt" />
     <None Include="Assets\Shippuden_Pack_v3\Choji_Shippuden\Choji_Shippuden.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Kiba_Shippuden\Kiba_Shippuden.xml" />
     <None Include="Assets\Shippuden_Pack_v3\Akamaru_Shippuden\Akamaru_Shippuden.xml" />

@@ -20,12 +20,17 @@ public class BattleManager : IActorManagerInterface
 
     void OnTriggerEnter(Collider other)
     {
-       
+        if (other.gameObject.layer == LayerMask.NameToLayer("die") && !actorManager.ac.isAI)
+        {
+            actorManager.Die();
+            return;
+        }
         if (other.tag =="weapon")
         {
             WeaponController wc = other.GetComponentInParent<WeaponController>();
-            actorManager.TryDamage(wc);
+            actorManager.TryDamage(wc, other);
             Debug.Log("攻击我的的物体为 " + other.name);
+
         }
     
     }

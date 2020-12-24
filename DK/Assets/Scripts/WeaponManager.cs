@@ -89,4 +89,17 @@ public class WeaponManager : IActorManagerInterface
     {
      actorManager.ac.mAnimator.ResetTrigger(paraName);
     }
+
+    public void EnableEffect(string name)
+    {
+        actorManager.effectMgr.SwitchEffect(name, true);
+    }
+    public void DisableEffect(string name)
+    {
+        actorManager.effectMgr.SwitchEffect(name, false);
+    }
+    public void InstantiateEffect(string name)
+    {
+       actorManager.effectMgr.InstantiateEffect(name, actorManager.transform.position, actorManager.transform.rotation);
+    }
 }

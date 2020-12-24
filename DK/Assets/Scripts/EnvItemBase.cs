@@ -23,6 +23,7 @@ public class EnvItemBase : MonoBehaviour
     public void Lock(bool val)
     {
         SetBool("lock", val);
+
     }
     public void IssueTrigger(string name)
     {

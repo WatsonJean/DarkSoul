@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     public float maxV_angle = 60;
     public float minV_angle = -30;
     public float smoothDampTime = 1;
-    public Image img_lockDot;
+    public RawImage  img_lockDot;
     public bool lockState = false;
     public float lockTargetMaxDis = 10f;
     public string lockLayerMaskName = "enemy";

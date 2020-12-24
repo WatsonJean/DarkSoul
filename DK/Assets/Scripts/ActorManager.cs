@@ -10,6 +10,7 @@ public class ActorManager : MonoBehaviour
     public AttributeStatusManager attributeMgr;
     public DirectorManager directorMgr;
     public InterActorManager interActorMgr;
+    public EffectManager effectMgr;
     // Start is called before the first frame update
     Vector3 actionPos;
     Transform lookatActor;
@@ -26,6 +27,9 @@ public class ActorManager : MonoBehaviour
         }
         attributeMgr = Bind<AttributeStatusManager>(gameObject);
         directorMgr = Bind<DirectorManager>(gameObject);
+
+        Transform effects = transform.Find("effects");
+        effectMgr = Bind<EffectManager>(effects.gameObject);
         ac.OnActionEvents += DoAction;
         actionPos = transform.position;
 
@@ -60,6 +64,7 @@ public class ActorManager : MonoBehaviour
     {
         if (interActorMgr.casterEventsList.Count>0)
         {
+
             if (directorMgr.pd.state == PlayState.Playing)//说明在播放中
                 return;
             CasterEvent casterEvent = interActorMgr.casterEventsList[0];
@@ -74,7 +79,9 @@ public class ActorManager : MonoBehaviour
                     // transform.position = actionPos;
                     lookatActor = casterEvent.actorManager.transform;
                     // ac.model.transform.LookAt(casterEvent.actorManager.transform,Vector3.up);
+                    casterEvent.actorManager.attributeMgr.isDie = true;
                     casterEvent.actorManager.Die();
+                    casterEvent.actorManager.ac.OnDieEnter();
                     directorMgr.Play_Stab("Stab_timeline", this, casterEvent.actorManager);
                   
                 }
@@ -106,14 +113,14 @@ public class ActorManager : MonoBehaviour
                   //  ac.model.transform.LookAt(casterEvent.itemBase.transform, Vector3.up);
                     casterEvent.itemBase.trigger = this;//触发者
                     //casterEvent.active = false;//只能开一次
-                    directorMgr.Play_ItemAction("switchgear_timeline", casterEvent.itemBase);
+                    directorMgr.Play_ItemAction("switchgear_timeline", casterEvent.itemBase,()=> { GameManager.instance.OpenDoor(); });
                 }
             }
         }
     }
 
     //受到伤害 处理
-    public void TryDamage(WeaponController controller)
+    public void TryDamage(WeaponController controller, Collider collider)
     {
         if (attributeMgr.isImmortal)//无敌
         {
@@ -124,7 +131,7 @@ public class ActorManager : MonoBehaviour
         if (attributeMgr.isCounterBackSuccess)//盾反成功动画状态 只能盾反普攻
         {
             if (attacker.attributeMgr.isNormalAttack && battleMgr.CounterBackSelf(attacker.ac.model.transform))//范围内
-                attacker.Stunned();
+                attacker.Stunned(collider);
         }
         else if (attributeMgr.isCounterBackFail)//盾反失败动画状态
         {
@@ -136,12 +143,18 @@ public class ActorManager : MonoBehaviour
       
       else  if (attributeMgr.isDenfense && battleMgr.IsFace2FaceFrontAngle(attacker.ac.model.transform, ac.model.transform, 70))//防御
         {
-                Blocked();       
+                Blocked(collider);       
         }
        else    
         {
             if (attacker.battleMgr.AttackFrontSelf(transform))
-                DamageHP(controller);
+            {
+                if (!attributeMgr.isSkillAttack)//如果自己在放技能 是霸体 不能被打断
+                {
+                    DamageHP(controller);
+                }
+            }
+               
         }
     }
 
@@ -198,21 +211,24 @@ public class ActorManager : MonoBehaviour
         }
 
     }
-    public void Blocked()
+    public void Blocked(Collider collider)
     {
+        Vector3 pos = collider.ClosestPoint(weaponMgr.weaponCollider_L.transform.position) + ac.model. transform.forward *0.2f;
+        effectMgr.InstantiateEffect("DefenseHit", pos, Quaternion.identity);
         ac.IssueTrigger("blocked");
     }
-    public void Stunned()
+    public void Stunned(Collider collider)
     {
+        Vector3 pos = collider.ClosestPoint(weaponMgr.weaponCollider_L.transform.position) + ac.model.transform.forward * 0.2f;
+        effectMgr.InstantiateEffect("DefenseHit", pos, Quaternion.identity);
         ac.IssueTrigger("stunned");
     }
 
     public void Die(bool showAnim = true)
     {
         battleMgr.EnableCollider(false);
-
+        attributeMgr.HP = 0;
         ac.IssueTrigger("die");
-
         ac.mInput.enableInput = false;
         if (ac.cameraController.lockState)
         {

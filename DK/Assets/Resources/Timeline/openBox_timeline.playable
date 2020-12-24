@@ -16,7 +16,7 @@ MonoBehaviour:
     actorMgr: {fileID: 0}
     newBehaviourVariable: 0
   actorMgr:
-    exposedName: ab54284e-1889-4c0f-832f-2ac4ab94c894
+    exposedName: 25330eca-8c10-4ac0-b946-f8abcf200ff0
     defaultValue: {fileID: 0}
 --- !u!114 &-4303040360240559778
 MonoBehaviour:
@@ -34,7 +34,7 @@ MonoBehaviour:
     EnvItem: {fileID: 0}
     newBehaviourVariable: 0
   EnvItem:
-    exposedName: b653a325-5736-4405-b03a-701d37e51a4f
+    exposedName: 90c254a1-7773-4725-ae97-c8370d319047
     defaultValue: {fileID: 0}
 --- !u!114 &-2284226868475127143
 MonoBehaviour:
@@ -94,7 +94,25 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -121,7 +139,25 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

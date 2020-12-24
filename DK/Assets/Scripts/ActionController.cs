@@ -28,8 +28,8 @@ public class ActionController : MonoBehaviour
     public PhysicMaterial phy_Mat_one;
     public Animator mAnimator;
     public IUserInput mInput;
-    Rigidbody rigbody;
-    CapsuleCollider capsuleCollider;
+     Rigidbody rigbody;
+     CapsuleCollider capsuleCollider;
     Vector3 planeMoveVec;
     Vector3 thrustVelocity=Vector3.zero;//跳跃向前的速度
     Vector3 deltaPos_Rm; //rootmotion中动画的偏移量
@@ -45,12 +45,14 @@ public class ActionController : MonoBehaviour
     public delegate void OnActionDelegate();
     public event OnActionDelegate OnActionEvents;
 
+    ActorManager actorManager;
     void Awake()
     {
         rigbody = GetComponent<Rigidbody>();
         mInput = GetComponent<IUserInput>();
         mAnimator = GetComponentInChildren<Animator>();
         capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+        actorManager = GetComponent<ActorManager>();
     }
 
     void Start()
@@ -125,7 +127,7 @@ public class ActionController : MonoBehaviour
         }
         //翻滚
         //if (mInput.roll || rigbody.velocity.magnitude > rollthreshold)
-        if (mInput.roll)
+        if (mInput.roll )
         {
             mAnimator.SetTrigger("roll");
             canAttackFlag = false;
@@ -320,6 +322,8 @@ public class ActionController : MonoBehaviour
         planeMoveVec = Vector3.zero;
         object ob = 0;
         model.SendMessage("WeaponEnable", ob);
+        capsuleCollider.enabled = false;
+        rigbody.useGravity = false;
 
     }
 
@@ -350,8 +354,18 @@ public class ActionController : MonoBehaviour
     {
         mInput.enableInput = false;
         planeMoveVec = Vector3.zero;
+        actorManager.effectMgr.SwitchEffect("StunnedCirclingStars", true);
+
+    }
+    public void OnStunned_Exit()
+    {
+        mInput.enableInput = false;
+        planeMoveVec = Vector3.zero;
+        actorManager.effectMgr.SwitchEffect("StunnedCirclingStars", false);
+
     }
 
+    
     public void OnCounterBack_Enter()
     {
         mInput.enableInput = false;

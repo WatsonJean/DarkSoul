@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - weapon
+  - Fx
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - sensor
   - caster
   - post
-  - 
+  - die
   - 
   - 
   - 

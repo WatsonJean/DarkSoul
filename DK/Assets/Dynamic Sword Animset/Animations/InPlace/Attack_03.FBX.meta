@@ -450,21 +450,21 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.32958147
+      - time: 0.28097036
         functionName: WeaponEnable
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.39116824
+      - time: 0.3147793
         functionName: ResetTrigger
         data: attack
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.39525968
+      - time: 0.37442634
         functionName: WeaponEnable
         data: 
         objectReferenceParameter: {instanceID: 0}
