@@ -6,7 +6,9 @@ using UnityEngine;
 public class BattleManager : IActorManagerInterface
 {
     CapsuleCollider capsuleCol;
-
+    bool isEnvironmentDamage = false;
+    float intervalTime = 1f;
+    float tempTime = 0;
     void Start()
     {
         capsuleCol = GetComponent<CapsuleCollider>();
@@ -17,12 +19,48 @@ public class BattleManager : IActorManagerInterface
         capsuleCol.enabled = true;
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        isEnvironmentDamage = false;
+    }
+    void OnTriggerStay(Collider other)
+    {
+        if (actorManager.attributeMgr.isDie) 
+            return;
+        if (isEnvironmentDamage)
+        {
+            tempTime += Time.deltaTime;
+            if (tempTime >= intervalTime )
+            {
+                tempTime = 0;
+                isEnvironmentDamage = false;
+            }
+        }
+        else
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("hit") && !actorManager.ac.isAI)
+            {
+                actorManager.DamageHP(-1f, true);
+                isEnvironmentDamage = true;
+            }
+
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
+        if (actorManager.attributeMgr.isDie) return;
+
         if (other.gameObject.layer == LayerMask.NameToLayer("die") && !actorManager.ac.isAI)
         {
             actorManager.Die();
+            return;
+        }
+        
+        if (other.gameObject.layer == LayerMask.NameToLayer("hit") && !actorManager.ac.isAI)
+        {
+            actorManager.DamageHP(-1f,true);
+            isEnvironmentDamage = true;
             return;
         }
         if (other.tag =="weapon")

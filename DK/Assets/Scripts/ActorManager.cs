@@ -166,7 +166,24 @@ public class ActorManager : MonoBehaviour
         sc.Active();
         sc.SetColor(Color.red);
     }
-    void DamageHP(WeaponController controller ,bool showHitAnim = true)
+
+   public void DamageHP(float damage, bool showHitAnim = true)
+    {
+        if (attributeMgr.isImmortal)//无敌
+            return;
+        HitEffect();
+        if (attributeMgr.AddHP(damage) > 0)
+        {
+            if (showHitAnim)
+            {
+                Hit(null);
+            }
+        }
+        else
+            Die();
+    }
+
+    public void DamageHP(WeaponController controller ,bool showHitAnim = true)
     {
         if (attributeMgr.isImmortal)//无敌
             return;
@@ -186,9 +203,16 @@ public class ActorManager : MonoBehaviour
     {
        attributeMgr.isCounterBackEventFlag = val;
     }
+
+
     public void Hit(ActorManager attacker)
     {
-
+        if (attacker == null)
+        {
+            ac.IssueTrigger("hit");
+            ac.SetFloat("hitType", 0);
+            return;
+        }
         ac.IssueTrigger("hit");
         Vector3 dir = (attacker.ac.model.transform.position - ac.model.transform.position).normalized;
         //判断攻击在自己的前后方
