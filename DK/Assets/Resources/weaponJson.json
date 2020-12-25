@@ -2,22 +2,22 @@
   "weaponDatas": [
     {
       "name": "dun1",
-      "ATK": 1,
-       "Denfense": 1
+      "ATK": 0,
+       "Denfense": 2
     },
     {
       "name": "dun2",
-      "ATK": 2,
-      "Denfense": 1
+      "ATK": 0,
+      "Denfense": 4
     },
     {
       "name": "dao1",
-      "ATK": 2,
+      "ATK": 5,
       "Denfense": 0
     },
     {
       "name": "dao2",
-      "ATK": 3,
+      "ATK": 7,
       "Denfense": 0
     }
 

@@ -19,7 +19,7 @@ public class StabPlayableBehaviour : PlayableBehaviour
 
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-     
+        actorMgr.LockActorController(true);
     }
 
     public override void PrepareFrame(Playable playable, FrameData info)
@@ -29,18 +29,18 @@ public class StabPlayableBehaviour : PlayableBehaviour
 
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-
+        actorMgr.LockActorController(false);
+        EndEvent?.Invoke();
     }
     public override void OnGraphStart(Playable playable)
     {
       //  actorMgr.ac.mAnimator.enabled = true;
-        actorMgr.LockActorController(true);
+ 
     }
 
     public override void OnGraphStop(Playable playable)
     {
-        actorMgr.LockActorController(false);
-        EndEvent?.Invoke();
+
        
     }
 }

@@ -55,6 +55,7 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (LockTarget == null)
         {
             //水平旋转
@@ -74,7 +75,7 @@ public class CameraController : MonoBehaviour
             playerHandle.transform.forward = Vector3.Slerp(playerHandle.transform.forward, targetVec.normalized,0.3f);
             cameraHandle.transform.LookAt(LockTarget.obj.transform.position+Vector3.up*0.8f);
             if (Vector3.Distance(model.transform.position, LockTarget.obj.transform.position) > lockTargetMaxDis || 
-                LockTarget.actorManager !=null && LockTarget.actorManager.attributeMgr.isDie)
+                LockTarget.actorManager !=null && LockTarget.actorManager.attributeMgr.isDie )
             {
                 LockTarget = null;
             }
@@ -86,6 +87,11 @@ public class CameraController : MonoBehaviour
             //cameraGo.transform.position = Vector3.Slerp(cameraGo.transform.position, transform.position, smoothDampTime);
             cameraGo.transform.LookAt(cameraHandle.transform);
         }
+    }
+
+    public void Unlock()
+    {
+        LockTarget = null;
     }
     void ShowLockDot()
     {

@@ -98,7 +98,9 @@ public class ActorManager : MonoBehaviour
                    // ac.model.transform.LookAt(casterEvent.itemBase.transform, Vector3.up);
                     casterEvent.itemBase.trigger = this;//触发者
                     //casterEvent.active = false;//箱子只能开一次
-                    directorMgr.Play_ItemAction("openBox_timeline", casterEvent.itemBase);
+                    directorMgr.Play_ItemAction("openBox_timeline", casterEvent.itemBase,()=> {
+                        weaponMgr.EquipWeapon(casterEvent.itemBase.weaponName);
+                    });
                 }
             }
 
@@ -188,7 +190,7 @@ public class ActorManager : MonoBehaviour
         if (attributeMgr.isImmortal)//无敌
             return;
         HitEffect();
-        if (attributeMgr.AddHP(controller.GetATK()) > 0)
+        if (attributeMgr.AddHP(controller.GetATK() * -1f) > 0)
         {
             if (showHitAnim )
             {
@@ -250,6 +252,7 @@ public class ActorManager : MonoBehaviour
 
     public void Die(bool showAnim = true)
     {
+        ac.cameraController.Unlock();
         battleMgr.EnableCollider(false);
         attributeMgr.HP = 0;
         ac.IssueTrigger("die");

@@ -64,6 +64,16 @@ public class WeaponManager : IActorManagerInterface
         actorManager.SetCounterBackEventFlag(b);
     }
 
+    public void EquipWeapon(string name)
+    {
+        if (name.Contains("dun"))
+        {
+            EquipWeapon_L(name,weaponController_L.weaponPos);
+        }
+        else
+            EquipWeapon_R(name, weaponController_R.weaponPos);
+    }
+
     public void EquipWeapon_L(string name,Transform parent)
     {
         for (int i = 0; i < parent.childCount; i++)

@@ -99,6 +99,7 @@
      <Compile Include="Assets\Epic Toon FX\Scripts\ETFXPitchRandomizer.cs" />
      <Compile Include="Assets\Epic Toon FX\Scripts\ETFXRotation.cs" />
      <Compile Include="Assets\Mixamo\Melee Axe Pack\Demo\CameraScroll.cs" />
+     <Compile Include="Assets\ScenceUI.cs" />
      <Compile Include="Assets\Scripts\AI\AttackState.cs" />
      <Compile Include="Assets\Scripts\AI\DeadState.cs" />
      <Compile Include="Assets\Scripts\AI\EnemyAI.cs" />

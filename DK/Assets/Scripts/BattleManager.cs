@@ -7,7 +7,7 @@ public class BattleManager : IActorManagerInterface
 {
     CapsuleCollider capsuleCol;
     bool isEnvironmentDamage = false;
-    float intervalTime = 1f;
+    float intervalTime = 0.7f;
     float tempTime = 0;
     void Start()
     {

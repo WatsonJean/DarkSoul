@@ -8,6 +8,7 @@ public class EnvItemBase : MonoBehaviour
     public Rigidbody rigbody;
     public Animator mAnimator;
     public GameObject model;
+    public string weaponName;
     void Awake()
     {
         rigbody = GetComponent<Rigidbody>();
