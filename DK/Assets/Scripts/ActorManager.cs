@@ -151,10 +151,8 @@ public class ActorManager : MonoBehaviour
         {
             if (attacker.battleMgr.AttackFrontSelf(transform))
             {
-                if (!attributeMgr.isSkillAttack)//如果自己在放技能 是霸体 不能被打断
-                {
-                    DamageHP(controller);
-                }
+                     //如果自己在放技能 是霸体 不能被打断
+                    DamageHP(controller, !attributeMgr.isSkillAttack);
             }
                
         }
